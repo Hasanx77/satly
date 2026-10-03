@@ -98,3 +98,25 @@ OpenAI kullanımı (~aylık birkaç dolar) ve (ödeme aşamasında) şahıs şir
 | Port 3000 dolu | `npm run start -- -p 3001` |
 | Demo modu çıkıyor | `.env.local` yok veya anahtar boş |
 | Türkçe karakterler bozuk (konsol) | Konsol kod sayfası; kod/HTTP sorunu değil |
+
+---
+
+## 7) Koyu Tema Yenilemesi (v2 — premium tasarım)
+
+Tüm site **koyu, "milyon dolarlık" hissi veren** bir tasarıma geçirildi:
+
+- Yeni tasarım sistemi: ışıma (glow), cam (glassmorphism), ızgara + gürültü arka plan,
+  gradient tipografi, animasyonlar (float, glow, marquee, fadeUp).
+- Fontlar: **Space Grotesk** (başlıklar) + **Inter** (metin).
+- Ana sayfa bölümleri: hero + ürün önizleme penceresi, istatistik şeridi, bento özellik
+  ızgarası, 3 adım akış, **canlı deneme**, yorumlar, fiyatlandırma (aylık/yıllık geçişli),
+  SSS akordeonu, final CTA, footer.
+- Generator, sonuç kartı, panel ve ücretsiz araç sayfası da koyu temaya uyarlandı.
+- Erişilebilirlik: form girdilerine `aria-label` eklendi.
+
+**Doğrulama:** üretim derlemesi hatasız; hero ve sonuç ekranı tarayıcıda uçtan uca test
+edildi (form doldur → üret → sonuç render).
+
+⚠️ **ÖNEMLİ:** Ana sayfadaki "Satıcılar ne diyor?" bölümündeki yorumlar
+**örnektir (placeholder)**. Yayına almadan önce **gerçek müşteri yorumlarıyla
+değiştirin** (`src/app/page.tsx` → `TESTIMONIALS`). Kod içinde de not düşülmüştür.

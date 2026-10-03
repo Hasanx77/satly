@@ -111,14 +111,19 @@ export default function Generator() {
   return (
     <div id="uretelim" className="grid gap-8 lg:grid-cols-2">
       {/* FORM */}
-      <form onSubmit={handleSubmit} className="card space-y-4">
+      <form
+        onSubmit={handleSubmit}
+        className="glass space-y-5 rounded-2xl p-6 shadow-[0_0_60px_-30px_rgba(139,92,246,0.9)]"
+      >
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-slate-900">Ürün bilgilerini gir</h3>
+          <h3 className="font-display text-lg font-semibold text-white">
+            Ürün bilgilerini gir
+          </h3>
           <span
-            className={`rounded-full px-3 py-1 text-xs font-medium ${
+            className={`rounded-full border px-3 py-1 text-xs font-medium ${
               remaining > 0
-                ? "bg-emerald-100 text-emerald-700"
-                : "bg-rose-100 text-rose-700"
+                ? "border-emerald-400/20 bg-emerald-500/10 text-emerald-300"
+                : "border-rose-400/20 bg-rose-500/10 text-rose-300"
             }`}
           >
             {remaining > 0
@@ -128,11 +133,12 @@ export default function Generator() {
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">
+          <label className="mb-1.5 block text-sm font-medium text-slate-300">
             Ürün adı *
           </label>
           <input
             className="input-base"
+            aria-label="Ürün adı"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Örn: Kablosuz Bluetooth Kulaklık"
@@ -143,11 +149,12 @@ export default function Generator() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label className="mb-1 block text-sm font-medium text-slate-700">
+            <label className="mb-1.5 block text-sm font-medium text-slate-300">
               Kategori
             </label>
             <input
               className="input-base"
+              aria-label="Kategori"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               placeholder="Örn: Elektronik"
@@ -155,16 +162,17 @@ export default function Generator() {
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-slate-700">
+            <label className="mb-1.5 block text-sm font-medium text-slate-300">
               Pazaryeri
             </label>
             <select
               className="input-base"
+              aria-label="Pazaryeri"
               value={marketplace}
               onChange={(e) => setMarketplace(e.target.value as Marketplace)}
             >
               {MARKETPLACES.map((m) => (
-                <option key={m.id} value={m.id}>
+                <option key={m.id} value={m.id} className="bg-ink-800">
                   {m.label}
                 </option>
               ))}
@@ -173,23 +181,24 @@ export default function Generator() {
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">
+          <label className="mb-1.5 block text-sm font-medium text-slate-300">
             Özellikler (virgülle ayır)
           </label>
           <textarea
-            className="input-base min-h-[90px]"
+            className="input-base min-h-[96px]"
+            aria-label="Özellikler"
             value={features}
             onChange={(e) => setFeatures(e.target.value)}
             placeholder="Örn: 20 saat pil ömrü, aktif gürültü engelleme, Type-C şarj"
             maxLength={1000}
           />
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1.5 text-xs text-slate-500">
             Boş bırakırsan AI uydurma özellik eklemez, güvenli genel ifadeler kullanır.
           </p>
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">
+          <label className="mb-1.5 block text-sm font-medium text-slate-300">
             Üslup
           </label>
           <div className="flex flex-wrap gap-2">
@@ -198,10 +207,10 @@ export default function Generator() {
                 type="button"
                 key={t.id}
                 onClick={() => setTone(t.id)}
-                className={`rounded-full border px-3 py-1 text-xs font-medium transition ${
+                className={`rounded-full border px-3.5 py-1.5 text-xs font-medium transition ${
                   tone === t.id
-                    ? "border-brand-600 bg-brand-600 text-white"
-                    : "border-slate-300 bg-white text-slate-600 hover:bg-slate-50"
+                    ? "border-brand-400/50 bg-brand-500/20 text-brand-100"
+                    : "border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/20 hover:text-slate-200"
                 }`}
               >
                 {t.label}
@@ -210,12 +219,23 @@ export default function Generator() {
           </div>
         </div>
 
-        <button type="submit" className="btn-primary w-full" disabled={loading || !name.trim()}>
-          {loading ? "Üretiliyor..." : "İçerik Üret"}
+        <button
+          type="submit"
+          className="btn-primary w-full py-3"
+          disabled={loading || !name.trim()}
+        >
+          {loading ? (
+            <>
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+              Üretiliyor…
+            </>
+          ) : (
+            "İçerik Üret"
+          )}
         </button>
 
         {error && (
-          <div className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-700">
+          <div className="rounded-xl border border-rose-400/20 bg-rose-500/10 px-3.5 py-2.5 text-sm text-rose-300">
             {error}
           </div>
         )}
@@ -226,9 +246,11 @@ export default function Generator() {
         {result ? (
           <ResultCard result={result} mock={mock} />
         ) : (
-          <div className="card flex min-h-[300px] flex-col items-center justify-center text-center text-slate-400">
-            <div className="mb-3 text-4xl">📝</div>
-            <p className="text-sm">
+          <div className="glass flex min-h-[360px] flex-col items-center justify-center rounded-2xl text-center">
+            <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-2xl">
+              📝
+            </div>
+            <p className="text-sm text-slate-400">
               Sonuçlar burada görünecek.
               <br />
               Soldaki formu doldur ve &ldquo;İçerik Üret&rdquo;e bas.
@@ -237,15 +259,15 @@ export default function Generator() {
         )}
 
         {history.length > 0 && (
-          <div className="card">
+          <div className="glass rounded-2xl p-5">
             <div className="mb-3 flex items-center justify-between">
-              <h4 className="text-sm font-semibold text-slate-800">
+              <h4 className="text-sm font-semibold text-slate-200">
                 Geçmiş ({history.length})
               </h4>
               <button
                 type="button"
                 onClick={clearHistory}
-                className="text-xs font-medium text-slate-500 hover:text-rose-600"
+                className="text-xs font-medium text-slate-500 transition hover:text-rose-400"
               >
                 Temizle
               </button>
@@ -256,10 +278,10 @@ export default function Generator() {
                   <button
                     type="button"
                     onClick={() => loadHistory(h)}
-                    className="w-full rounded-lg border border-slate-200 px-3 py-2 text-left text-sm text-slate-700 transition hover:bg-slate-50"
+                    className="w-full rounded-xl border border-white/10 bg-white/[0.02] px-3.5 py-2.5 text-left text-sm text-slate-300 transition hover:border-white/20 hover:bg-white/[0.05]"
                   >
-                    <span className="font-medium">{h.input.name}</span>
-                    <span className="ml-2 text-xs text-slate-400">
+                    <span className="font-medium text-slate-100">{h.input.name}</span>
+                    <span className="ml-2 text-xs text-slate-500">
                       {h.input.marketplace}
                     </span>
                   </button>

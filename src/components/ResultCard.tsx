@@ -20,7 +20,7 @@ function CopyButton({ text, label = "Kopyala" }: { text: string; label?: string 
     <button
       type="button"
       onClick={copy}
-      className="rounded-md border border-slate-200 px-2 py-1 text-xs font-medium text-slate-600 transition hover:bg-slate-100"
+      className="rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs font-medium text-slate-300 transition hover:border-white/20 hover:bg-white/[0.07] hover:text-white"
     >
       {copied ? "Kopyalandı ✓" : label}
     </button>
@@ -97,12 +97,12 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-      <div className="mb-2 flex items-center justify-between gap-2">
-        <h4 className="text-sm font-semibold text-slate-800">{title}</h4>
+    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+      <div className="mb-2.5 flex items-center justify-between gap-2">
+        <h4 className="text-sm font-semibold text-slate-200">{title}</h4>
         <CopyButton text={copyText} />
       </div>
-      <div className="text-sm leading-relaxed text-slate-700">{children}</div>
+      <div className="text-sm leading-relaxed text-slate-300">{children}</div>
     </div>
   );
 }
@@ -119,13 +119,13 @@ export default function ResultCard({
   return (
     <div className="space-y-3">
       {mock && (
-        <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+        <div className="rounded-xl border border-amber-400/20 bg-amber-500/10 px-3.5 py-2.5 text-xs text-amber-200">
           Demo modu: OpenAI anahtarı tanımlı olmadığı için örnek çıktı gösteriliyor.
         </div>
       )}
 
       <Section title="Başlık Varyantları" copyText={result.titleOptions.join("\n")}>
-        <ul className="list-disc space-y-1 pl-5">
+        <ul className="list-disc space-y-1.5 pl-5 marker:text-brand-400">
           {result.titleOptions.map((t, i) => (
             <li key={i}>{t}</li>
           ))}
@@ -144,7 +144,7 @@ export default function ResultCard({
         title="Özellikler"
         copyText={result.features.map((f) => `• ${f}`).join("\n")}
       >
-        <ul className="list-disc space-y-1 pl-5">
+        <ul className="list-disc space-y-1.5 pl-5 marker:text-brand-400">
           {result.features.map((f, i) => (
             <li key={i}>{f}</li>
           ))}
@@ -156,7 +156,7 @@ export default function ResultCard({
           {result.keywords.map((k, i) => (
             <span
               key={i}
-              className="rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-800"
+              className="rounded-full border border-brand-400/20 bg-brand-500/15 px-3 py-1 text-xs font-medium text-brand-200"
             >
               {k}
             </span>
