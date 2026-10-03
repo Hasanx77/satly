@@ -28,15 +28,18 @@ export default function Pricing() {
         >
           Yıllık
           <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[11px] font-semibold text-emerald-300">
-            %20 indirim
+            %50 indirim
           </span>
         </button>
       </div>
 
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
         {PLANS.map((p) => {
-          const price = p.price === 0 ? 0 : yearly ? Math.round(p.price * 0.8) : p.price;
+          const isFree = p.price === 0;
+          const amount = yearly ? p.priceYearly : p.price;
+          const perMonthEquivalent = yearly && p.priceYearly > 0 ? Math.round(p.priceYearly / 12) : 0;
           const isHighlight = p.highlight;
+
           return (
             <div
               key={p.id}
@@ -55,14 +58,21 @@ export default function Pricing() {
               <h3 className="font-display text-lg font-bold text-white">{p.name}</h3>
               <p className="mt-1 text-xs text-brand-300">{p.quota}</p>
 
-              <div className="mt-5 flex items-baseline gap-1">
-                <span className="font-display text-4xl font-extrabold tracking-tight text-white">
-                  {price === 0 ? "0" : price.toLocaleString("tr-TR")}
-                </span>
-                <span className="text-lg font-semibold text-slate-400">₺</span>
-                <span className="text-sm text-slate-500">
-                  {p.price === 0 ? "" : yearly ? "/ay · yıllık" : "/ay"}
-                </span>
+              <div className="mt-5">
+                <div className="flex items-baseline gap-1">
+                  <span className="font-display text-4xl font-extrabold tracking-tight text-white">
+                    {amount.toLocaleString("tr-TR")}
+                  </span>
+                  <span className="text-lg font-semibold text-slate-400">₺</span>
+                  <span className="text-sm text-slate-500">
+                    {isFree ? "" : yearly ? "/yıl" : "/ay"}
+                  </span>
+                </div>
+                {!isFree && yearly && (
+                  <p className="mt-1 text-xs text-slate-400">
+                    ≈ {perMonthEquivalent.toLocaleString("tr-TR")} ₺/ay · yıllık faturalandırılır
+                  </p>
+                )}
               </div>
 
               <ul className="mt-6 flex-1 space-y-3 text-sm text-slate-300">
@@ -80,7 +90,7 @@ export default function Pricing() {
                 href="#uretelim"
                 className={isHighlight ? "btn-primary mt-6 w-full" : "btn-ghost mt-6 w-full"}
               >
-                {p.price === 0 ? "Ücretsiz Başla" : "Planı Seç"}
+                {isFree ? "Ücretsiz Başla" : "Planı Seç"}
               </a>
             </div>
           );
