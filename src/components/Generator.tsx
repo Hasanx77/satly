@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { MARKETPLACES, TONES } from "@/lib/prompts";
+import { useEffect, useRef, useState } from "react";
+import { LANGUAGES, MARKETPLACES, TONES } from "@/lib/prompts";
 import { FREE_QUOTA } from "@/lib/plans";
 import type {
   GenerateResponse,
   GenerationResult,
   HistoryItem,
+  Language,
   Marketplace,
   Tone,
 } from "@/lib/types";
@@ -15,12 +16,32 @@ import ResultCard from "./ResultCard";
 const HISTORY_KEY = "satly_history_v1";
 const USAGE_KEY = "satly_usage_v1";
 
+async function downscaleImage(file: File): Promise<string> {
+  const bitmap = await createImageBitmap(file);
+  const maxDim = 1024;
+  const scale = Math.min(1, maxDim / Math.max(bitmap.width, bitmap.height));
+  const width = Math.round(bitmap.width * scale);
+  const height = Math.round(bitmap.height * scale);
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("canvas yok");
+  ctx.drawImage(bitmap, 0, 0, width, height);
+  bitmap.close?.();
+  return canvas.toDataURL("image/jpeg", 0.82);
+}
+
 export default function Generator() {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [features, setFeatures] = useState("");
   const [marketplace, setMarketplace] = useState<Marketplace>("trendyol");
   const [tone, setTone] = useState<Tone>("profesyonel");
+  const [language, setLanguage] = useState<Language>("tr");
+  const [image, setImage] = useState<string | null>(null);
+  const [imageName, setImageName] = useState("");
+  const [imageBusy, setImageBusy] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -29,6 +50,8 @@ export default function Generator() {
 
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [used, setUsed] = useState(0);
+
+  const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     try {
@@ -43,6 +66,31 @@ export default function Generator() {
 
   const remaining = Math.max(0, FREE_QUOTA - used);
 
+  async function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      setError("Lütfen bir görsel dosyası seçin (JPG/PNG).");
+      return;
+    }
+    if (file.size > 12 * 1024 * 1024) {
+      setError("Görsel çok büyük (en fazla 12 MB).");
+      return;
+    }
+    try {
+      setImageBusy(true);
+      setError(null);
+      const dataUrl = await downscaleImage(file);
+      setImage(dataUrl);
+      setImageName(file.name);
+    } catch {
+      setError("Görsel işlenemedi. Başka bir dosya deneyin.");
+    } finally {
+      setImageBusy(false);
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!name.trim() || loading) return;
@@ -52,10 +100,20 @@ export default function Generator() {
     setResult(null);
 
     try {
+      const payload: Record<string, unknown> = {
+        name,
+        category,
+        features,
+        marketplace,
+        tone,
+        language,
+      };
+      if (image) payload.image = image;
+
       const res = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, category, features, marketplace, tone }),
+        body: JSON.stringify(payload),
       });
       const data = (await res.json()) as GenerateResponse;
 
@@ -72,7 +130,7 @@ export default function Generator() {
             ? crypto.randomUUID()
             : String(Date.now()),
         createdAt: new Date().toISOString(),
-        input: { name, category, features, marketplace, tone },
+        input: { name, category, features, marketplace, tone, language },
         result: data.result,
       };
       const next = [item, ...history].slice(0, 20);
@@ -95,6 +153,7 @@ export default function Generator() {
     setFeatures(item.input.features || "");
     setMarketplace(item.input.marketplace);
     setTone((item.input.tone as Tone) || "profesyonel");
+    if (item.input.language) setLanguage(item.input.language);
     setResult(item.result);
     setMock(false);
     setError(null);
@@ -126,9 +185,7 @@ export default function Generator() {
                 : "border-rose-400/20 bg-rose-500/10 text-rose-300"
             }`}
           >
-            {remaining > 0
-              ? `${remaining} ücretsiz üretim hakkı`
-              : "Ücretsiz hak bitti"}
+            {remaining > 0 ? `${remaining} ücretsiz üretim hakkı` : "Ücretsiz hak bitti"}
           </span>
         </div>
 
@@ -180,12 +237,36 @@ export default function Generator() {
           </div>
         </div>
 
+        {/* Dil */}
+        <div>
+          <label className="mb-1.5 block text-sm font-medium text-slate-300">
+            Çıktı dili
+          </label>
+          <div className="flex flex-wrap gap-2">
+            {LANGUAGES.map((l) => (
+              <button
+                type="button"
+                key={l.id}
+                onClick={() => setLanguage(l.id)}
+                className={`rounded-full border px-3.5 py-1.5 text-xs font-medium transition ${
+                  language === l.id
+                    ? "border-brand-400/50 bg-brand-500/20 text-brand-100"
+                    : "border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/20 hover:text-slate-200"
+                }`}
+              >
+                <span className="mr-1">{l.flag}</span>
+                {l.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div>
           <label className="mb-1.5 block text-sm font-medium text-slate-300">
             Özellikler (virgülle ayır)
           </label>
           <textarea
-            className="input-base min-h-[96px]"
+            className="input-base min-h-[88px]"
             aria-label="Özellikler"
             value={features}
             onChange={(e) => setFeatures(e.target.value)}
@@ -197,10 +278,58 @@ export default function Generator() {
           </p>
         </div>
 
+        {/* Görsel */}
         <div>
           <label className="mb-1.5 block text-sm font-medium text-slate-300">
-            Üslup
+            Ürün görseli{" "}
+            <span className="font-normal text-slate-500">(isteğe bağlı · yapay zekâ görseli analiz eder)</span>
           </label>
+
+          <input
+            ref={fileRef}
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="hidden"
+          />
+
+          {image ? (
+            <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-2.5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={image}
+                alt="Ürün görseli"
+                className="h-14 w-14 rounded-lg object-cover"
+              />
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm text-slate-200">{imageName || "görsel"}</p>
+                <p className="text-xs text-slate-500">Analiz edilecek</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setImage(null);
+                  setImageName("");
+                }}
+                className="rounded-md border border-white/10 px-2.5 py-1 text-xs text-slate-300 transition hover:border-rose-400/40 hover:text-rose-300"
+              >
+                Kaldır
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => fileRef.current?.click()}
+              disabled={imageBusy}
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-white/15 bg-white/[0.02] px-4 py-4 text-sm text-slate-400 transition hover:border-brand-400/40 hover:text-slate-200 disabled:opacity-60"
+            >
+              {imageBusy ? "Görsel işleniyor…" : "📷 Görsel yükle (JPG/PNG)"}
+            </button>
+          )}
+        </div>
+
+        <div>
+          <label className="mb-1.5 block text-sm font-medium text-slate-300">Üslup</label>
           <div className="flex flex-wrap gap-2">
             {TONES.map((t) => (
               <button
@@ -283,6 +412,7 @@ export default function Generator() {
                     <span className="font-medium text-slate-100">{h.input.name}</span>
                     <span className="ml-2 text-xs text-slate-500">
                       {h.input.marketplace}
+                      {h.input.language === "en" ? " · EN" : ""}
                     </span>
                   </button>
                 </li>

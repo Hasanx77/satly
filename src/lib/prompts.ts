@@ -1,4 +1,4 @@
-import type { GenerationInput, Marketplace, Tone } from "./types";
+import type { GenerationInput, Language, Marketplace, Tone } from "./types";
 
 export const MARKETPLACES: {
   id: Marketplace;
@@ -34,13 +34,20 @@ export const TONES: { id: Tone; label: string }[] = [
   { id: "genc", label: "Genç & enerjik" },
 ];
 
-const BASE_RULES = `
-Sen Türkiye'nin en iyi e-ticaret metin yazarı ve SEO uzmanısın.
-Türkçe ürün metinleri üretiyorsun. Kurallar:
+export const LANGUAGES: { id: Language; label: string; flag: string }[] = [
+  { id: "tr", label: "Türkçe", flag: "🇹🇷" },
+  { id: "en", label: "English", flag: "🇬🇧" },
+];
 
-1. Tüm çıktı TÜRKÇE olacak ve akıcı, doğal Türkçe ile yazılacak.
+const BASE_RULES = `
+Sen dünyanın en iyi e-ticaret metin yazarı ve SEO uzmanısın.
+Kurallar:
+
+1. Akıcı, doğal ve satış odaklı metin yaz.
 2. ASLA uydurma teknik özellik, marka, sertifika, garanti süresi veya sayı ekleme.
    Kullanıcı bir özellik vermediyse onu yazma; onun yerine genel ve güvenli bir ifade kullan.
+   Bir görsel verildiyse, SADECE görselde gerçekten görünen özellikleri (renk, biçim, tür, adet,
+   malzeme izlenimi) betimleyebilirsin; görünmeyen teknik detayı uydurma.
 3. Abartılı ve yanıltıcı ifadeler ("dünyanın en iyisi", "%100 garanti") kullanma.
 4. Anahtar kelimeleri doğal biçimde metne yerleştir, keyword stuffing yapma.
 5. Çıktıyı SADECE aşağıdaki JSON şemasına uygun ver, başka açıklama yazma.
@@ -52,15 +59,19 @@ JSON ŞEMASI:
   "longDescription": "paragraflara ayrılmış detaylı açıklama",
   "features": ["özellik 1", "özellik 2", "özellik 3"],
   "keywords": ["anahtar kelime 1", "anahtar kelime 2"],
-  "socialCaption": "Instagram için 1-2 cümle + 3-5 hashtag"
+  "socialCaption": "sosyal medya için 1-2 cümle + 3-5 hashtag"
 }
 `.trim();
+
+const LANGUAGE_RULES: Record<Language, string> = {
+  tr: "DİL: Tüm çıktı, başlıklar ve anahtar kelimeler dahil, TÜRKÇE olacak.",
+  en: "LANGUAGE: All output — titles, descriptions, features, keywords and social caption — must be in ENGLISH.",
+};
 
 const MARKET_RULES: Record<Marketplace, string> = {
   trendyol: `
 PAZARYERİ: Trendyol
-- Başlık: 3 farklı varyant üret. Her biri 60-100 karakter arası, anahtar kelimeyle başlasın,
-  gereksiz süsleme olmasın (Trendyol kullanıcısı hızlı tarar).
+- Başlık: 3 farklı varyant üret. Her biri 60-100 karakter arası, anahtar kelimeyle başlasın.
 - Kısa açıklama: Trendyol ürün kartı için 1-2 cümle.
 - Uzun açıklama: Madde madde okunabilir, kategoriye uygun.
 - Özellikler: 5-8 madde, satın alma kararını kolaylaştıracak şekilde.
@@ -73,7 +84,7 @@ PAZARYERİ: Hepsiburada
 - Uzun açıklama: garanti/iade/kullanım bilgisi vurgusu (uydurma süre verme).
 - Anahtar kelimeler: 8-12 adet.`,
   amazon: `
-PAZARYERİ: Amazon TR
+PAZARYERİ: Amazon
 - Başlık: 3 varyant, 150 karakteri geçmesin; marka + ürün + özellik + boyut/renk.
 - Özellikler: TAM 5 madde, her biri fayda odaklı (bullet point).
 - Uzun açıklama: müşteri sorularını yanıtlar nitelikte (neden almalı, nasıl kullanılır).
@@ -96,11 +107,15 @@ const TONE_RULES: Record<Tone, string> = {
   genc: "Ton: enerjik, genç, kısa cümleli, güncel.",
 };
 
-export function buildSystemPrompt(marketplace: Marketplace): string {
-  return [BASE_RULES, MARKET_RULES[marketplace]].join("\n\n");
+export function buildSystemPrompt(marketplace: Marketplace, language: Language = "tr"): string {
+  return [
+    BASE_RULES,
+    LANGUAGE_RULES[language] || LANGUAGE_RULES.tr,
+    MARKET_RULES[marketplace],
+  ].join("\n\n");
 }
 
-export function buildUserPrompt(input: GenerationInput): string {
+export function buildUserPrompt(input: GenerationInput, withImage = false): string {
   const tone = (input.tone || "profesyonel") as Tone;
   const lines = [
     "Aşağıdaki ürün için satışa hazır içerik üret.",
@@ -108,10 +123,12 @@ export function buildUserPrompt(input: GenerationInput): string {
     `Ürün adı: ${input.name}`,
     `Kategori: ${input.category || "(belirtilmedi)"}`,
     `Bilinen özellikler: ${input.features || "(kullanıcı özellik vermedi - uydurma)"}`,
-    "",
-    TONE_RULES[tone] || TONE_RULES.profesyonel,
-    "",
-    "JSON çıktısını ver.",
   ];
+  if (withImage) {
+    lines.push(
+      "Ek olarak bir ürün görseli verildi. Görselde GÖRÜNEN özellikleri (renk, biçim, tür, malzeme izlenimi) açıklamana katabilirsin; görünmeyen teknik detayı uydurma."
+    );
+  }
+  lines.push("", TONE_RULES[tone] || TONE_RULES.profesyonel, "", "JSON çıktısını ver.");
   return lines.join("\n");
 }

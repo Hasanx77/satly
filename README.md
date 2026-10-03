@@ -36,6 +36,9 @@ kelimeleri ve satış odaklı ton ile ürün ilanlarını zahmetsizce hazırlar.
   Shopify'ın marka anlatımı; her kanala uygun çıktı.
 - 🔍 **SEO anahtar kelimeleri** — Ürününüzün aramada bulunmasını sağlayan doğal terimler.
 - 🎭 **4 üslup** — Profesyonel, samimi, premium, genç & enerjik.
+- 📷 **Görselden içerik** — Ürün fotoğrafını yükle; yapay zekâ görselde görünen
+  özellikleri (renk, biçim, tür) açıklamaya katar.
+- 🌍 **Çoklu dil** — Türkçe veya İngilizce çıktı (ihracatçı satıcılar için).
 - 🛡️ **Uydurma yok** — Bilinmeyen teknik özellik uydurulmaz; güvenli ifade kullanılır.
 - 📋 **Kopyala & indir** — Tek tıkla kopyala ya da **CSV/TXT** indir (Excel uyumlu).
 - ⚡ **Demo modu** — OpenAI anahtarı olmadan da çalışır, örnek çıktı üretir.
@@ -120,6 +123,7 @@ satly/
 - [x] MVP: üretim motoru, kopyala/indir, panel, demo modu
 - [x] Premium koyu tema + fiyatlandırma + SSS
 - [x] API test paketi
+- [x] Görselden içerik (vision) + Türkçe/İngilizce çıktı
 - [ ] Supabase hesap sistemi ve bulut geçmiş
 - [ ] iyzico/PayTR abonelik ve faturalama
 - [ ] Toplu üretim (CSV/Excel yükleme)

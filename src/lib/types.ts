@@ -2,12 +2,15 @@ export type Marketplace = "trendyol" | "hepsiburada" | "amazon" | "shopify";
 
 export type Tone = "profesyonel" | "samimi" | "premium" | "genc";
 
+export type Language = "tr" | "en";
+
 export interface GenerationInput {
   name: string;
   category?: string;
   features?: string;
   marketplace: Marketplace;
   tone?: Tone;
+  language?: Language;
 }
 
 export interface GenerationResult {

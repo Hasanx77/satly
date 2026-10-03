@@ -79,6 +79,37 @@ const FEATURES = [
       />
     ),
   },
+  {
+    span: "md:col-span-3",
+    title: "Görselden içerik",
+    text: "Ürün fotoğrafını yükle; yapay zekâ görselde görünen özellikleri (renk, biçim, tür) açıklamaya katar. Görünmeyen detayı uydurmaz.",
+    icon: (
+      <>
+        <path
+          d="M4 7h3l1.5-2h7L17 7h3v11H4V7Z"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinejoin="round"
+        />
+        <circle cx="12" cy="12.5" r="3" stroke="currentColor" strokeWidth="2" />
+      </>
+    ),
+  },
+  {
+    span: "md:col-span-3",
+    title: "Türkçe & İngilizce çıktı",
+    text: "İhracat yapan satıcılar için tek tıkla İngilizce içerik üretin. Pazaryeri formatı ve SEO yapısı korunur.",
+    icon: (
+      <>
+        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
+        <path
+          d="M3 12h18M12 3c3.5 4 3.5 14 0 18M12 3c-3.5 4-3.5 14 0 18"
+          stroke="currentColor"
+          strokeWidth="2"
+        />
+      </>
+    ),
+  },
 ];
 
 const STEPS = [
@@ -157,8 +188,8 @@ export default function Home() {
 
             <p className="mx-auto mt-6 max-w-2xl animate-fadeUp text-lg leading-relaxed text-slate-400 [animation-delay:160ms]">
               Trendyol, Hepsiburada, Amazon ve Shopify için satışa hazır başlık,
-              açıklama, özellik listesi ve SEO anahtar kelimeleri — tek tıkla,
-              Türkçe ve uydurma olmadan.
+              açıklama, özellik ve SEO anahtar kelimeleri — ürün adından ya da
+              görselden, Türkçe veya İngilizce.
             </p>
 
             <div className="mt-9 flex animate-fadeUp flex-wrap items-center justify-center gap-3 [animation-delay:240ms]">

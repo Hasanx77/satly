@@ -114,8 +114,29 @@ for (const tone of ["samimi", "premium", "genc", "profesyonel"]) {
   check(`ton=${tone}: 200`, r.status === 200, "durum=" + r.status);
 }
 
-// --- 5) Hız sınırı (EN SON) ---
-console.log("\n5) Hiz siniri (dakikada 20)");
+// --- 5) Dil ve görsel ---
+console.log("\n5) Dil ve gorsel");
+{
+  const en = await postJson("/api/generate", {
+    name: "Wireless Earbuds",
+    marketplace: "amazon",
+    language: "en",
+  });
+  check("Ingilizce uretim -> 200 + gecerli sonuc", en.status === 200 && validResult(en.body && en.body.result), "durum=" + en.status);
+
+  const badImg = await postJson("/api/generate", { name: "Test", marketplace: "trendyol", image: "bozuk" });
+  check("Gecersiz gorsel -> 400", badImg.status === 400, "durum=" + badImg.status);
+
+  const goodImg = await postJson("/api/generate", {
+    name: "Test",
+    marketplace: "trendyol",
+    image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M8AAAMBAQDJ/pLvAAAAAElFTkSuQmCC",
+  });
+  check("Gecerli gorsel -> 200", goodImg.status === 200, "durum=" + goodImg.status);
+}
+
+// --- 6) Hız sınırı (EN SON) ---
+console.log("\n6) Hiz siniri (dakikada 20)");
 {
   let got429 = false;
   for (let i = 0; i < 30; i++) {

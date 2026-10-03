@@ -21,7 +21,11 @@ const FAQS = [
   },
   {
     q: "İngilizce veya başka dillerde de üretiyor mu?",
-    a: "Şu an birincil dil Türkçe. İhracat yapan satıcılar için İngilizce çıktı desteği yol haritasında yer alıyor.",
+    a: "Evet. Çıktıyı Türkçe veya İngilizce olarak üretebilirsiniz. İhracat yapan satıcılar için İngilizce çıktı desteklenir.",
+  },
+  {
+    q: "Ürün görselini yükleyebilir miyim?",
+    a: "Evet. İsteğe bağlı olarak ürün fotoğrafı yükleyebilirsiniz; yapay zekâ görselde görünen özellikleri (renk, biçim, tür) açıklamaya katar, görünmeyen teknik detayı uydurmaz.",
   },
   {
     q: "Verilerim güvende mi?",
