@@ -17,7 +17,7 @@ const FAQS = [
   },
   {
     q: "Ücretsiz mi, kart bilgisi gerekiyor mu?",
-    a: "İlk 2 üretim tamamen ücretsizdir ve kayıt istemez. Devam etmek isterseniz aylık planlar 200 ₺'den başlar; yıllık ödemede %50 indirim uygulanır.",
+    a: "İlk 2 üretim tamamen ücretsizdir ve kayıt istemez. Devam etmek isterseniz aylık planlar 200 ₺'den başlar; yıllık ödemede %35 indirim uygulanır.",
   },
   {
     q: "İngilizce veya başka dillerde de üretiyor mu?",

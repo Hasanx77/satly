@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { PLANS } from "@/lib/plans";
+import { PLANS, YEARLY_DISCOUNT } from "@/lib/plans";
 
 export default function Pricing() {
   const [yearly, setYearly] = useState(true);
+  const discountPct = Math.round(YEARLY_DISCOUNT * 100);
 
   return (
     <div>
@@ -28,7 +29,7 @@ export default function Pricing() {
         >
           Yıllık
           <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[11px] font-semibold text-emerald-300">
-            %50 indirim
+            %{discountPct} indirim
           </span>
         </button>
       </div>
@@ -36,8 +37,9 @@ export default function Pricing() {
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
         {PLANS.map((p) => {
           const isFree = p.price === 0;
-          const amount = yearly ? p.priceYearly : p.price;
-          const perMonthEquivalent = yearly && p.priceYearly > 0 ? Math.round(p.priceYearly / 12) : 0;
+          const yearlyTotal = Math.round(p.price * 12 * (1 - YEARLY_DISCOUNT));
+          const amount = yearly ? yearlyTotal : p.price;
+          const perMonthEquivalent = yearly && yearlyTotal > 0 ? Math.round(yearlyTotal / 12) : 0;
           const isHighlight = p.highlight;
 
           return (

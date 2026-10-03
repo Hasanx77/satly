@@ -43,7 +43,7 @@ Anahtar kelimeler ve 12 makale fikri için `docs/ICERIK-PLANI.md`.
 | Pro | 400 ₺/ay | 500 üretim + sosyal medya |
 | Ajans | 1.000 ₺/ay | 2.000 üretim, 5 kullanıcı, toplu |
 
-Yıllık ödemede %50 indirim (nakit akışı için).
+Yıllık ödemede %35 indirim (nakit akışı için).
 
 ---
 
