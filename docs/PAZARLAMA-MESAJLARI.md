@@ -52,7 +52,7 @@ Kopyala-yapıştır kullanılabilir. Gönderirken ürün adını kişiselleştir
 
 ## 5) Ücretsiz hak bitince (dönüşüm) mesajı
 
-> Merhaba! Ücretsiz haklarınız doldu. Ayda 100 ürün için **Başlangıç planı 490 ₺**.
+> Merhaba! Ücretsiz haklarınız doldu. Ayda 100 ürün için **Başlangıç planı 245 ₺**.
 > İlk 20 müşteriye **ilk ay %50 indirim** uyguluyorum. Devam etmek ister misiniz?
 
 ---

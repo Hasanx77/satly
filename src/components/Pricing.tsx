@@ -88,7 +88,7 @@ export default function Pricing() {
       </div>
 
       <p className="mt-6 text-center text-xs text-slate-500">
-        Kart bilgisi şimdilik alınmıyor — beta aşamasındayız. İlk 5 üretim her zaman ücretsiz.
+        Kart bilgisi şimdilik alınmıyor — beta aşamasındayız. İlk 2 üretim her zaman ücretsiz.
       </p>
     </div>
   );

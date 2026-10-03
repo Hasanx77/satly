@@ -41,7 +41,7 @@ export default function BaslikUreticiPage() {
           <p className="mt-4 text-lg leading-relaxed text-slate-400">
             Ürün adını ve bilinen özelliklerini yazın; Trendyol, Hepsiburada, Amazon veya
             Shopify için <b className="text-slate-200">satışa hazır başlık, açıklama ve SEO
-            anahtar kelimeleri</b> üretsin. İlk 5 üretim ücretsizdir.
+            anahtar kelimeleri</b> üretsin. İlk 2 üretim ücretsizdir.
           </p>
         </div>
 

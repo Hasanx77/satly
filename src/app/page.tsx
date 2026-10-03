@@ -8,7 +8,7 @@ import Faq from "@/components/Faq";
 const STATS = [
   { value: "30 sn", label: "ortalama içerik süresi" },
   { value: "4", label: "pazaryeri formatı" },
-  { value: "5", label: "ücretsiz üretim hakkı" },
+  { value: "2", label: "ücretsiz üretim hakkı" },
   { value: "%0", label: "uydurma özellik" },
 ];
 
@@ -163,7 +163,7 @@ export default function Home() {
 
             <div className="mt-9 flex animate-fadeUp flex-wrap items-center justify-center gap-3 [animation-delay:240ms]">
               <Link href="#uretelim" className="btn-primary px-6 py-3 text-base">
-                Ücretsiz Dene — 5 hak
+                Ücretsiz Dene — 2 hak
               </Link>
               <Link href="#nasil" className="btn-ghost px-6 py-3 text-base">
                 Nasıl çalışır?
@@ -342,7 +342,7 @@ export default function Home() {
         <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-brand-600/20 to-fuchsia-600/5 px-6 py-16 text-center">
           <div className="pointer-events-none absolute left-1/2 top-0 h-64 w-[700px] -translate-x-1/2 rounded-full bg-brand-500/25 blur-[120px]" />
           <h2 className="relative font-display text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
-            İlk 5 üretiminiz ücretsiz.
+            İlk 2 üretiminiz ücretsiz.
           </h2>
           <p className="relative mx-auto mt-4 max-w-xl text-slate-300">
             Ürününüzü yazın, satışa hazır içeriği saniyeler içinde görün. Beğenmezseniz

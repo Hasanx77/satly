@@ -8,7 +8,7 @@ export interface Plan {
   features: string[];
 }
 
-export const FREE_QUOTA = 5;
+export const FREE_QUOTA = 2;
 
 export const PLANS: Plan[] = [
   {
@@ -16,9 +16,9 @@ export const PLANS: Plan[] = [
     name: "Ücretsiz",
     price: 0,
     period: "",
-    quota: "5 üretim / ay",
+    quota: "2 üretim / ay",
     features: [
-      "5 ürün içeriği / ay",
+      "2 ürün içeriği / ay",
       "Tek pazaryeri",
       "Kopyala & indir",
     ],
@@ -26,7 +26,7 @@ export const PLANS: Plan[] = [
   {
     id: "starter",
     name: "Başlangıç",
-    price: 490,
+    price: 245,
     period: "/ay",
     quota: "100 üretim / ay",
     highlight: true,
@@ -40,7 +40,7 @@ export const PLANS: Plan[] = [
   {
     id: "pro",
     name: "Pro",
-    price: 990,
+    price: 495,
     period: "/ay",
     quota: "500 üretim / ay",
     features: [
@@ -53,7 +53,7 @@ export const PLANS: Plan[] = [
   {
     id: "agency",
     name: "Ajans",
-    price: 2500,
+    price: 1250,
     period: "/ay",
     quota: "2.000 üretim / ay",
     features: [

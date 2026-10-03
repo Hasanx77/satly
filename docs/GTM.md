@@ -29,7 +29,7 @@ Anahtar kelimeler ve 12 makale fikri için `docs/ICERIK-PLANI.md`.
 
 ## Faz 3 — Ajans iş birliği (yüksek gelir)
 
-- Ajanslara **toplu plan / beyaz etiket** sat (2.500 ₺/ay).
+- Ajanslara **toplu plan / beyaz etiket** sat (1.250 ₺/ay).
 - Bir ajans anlaşması = 10+ satıcı. Odak noktası burada.
 
 ---
@@ -38,10 +38,10 @@ Anahtar kelimeler ve 12 makale fikri için `docs/ICERIK-PLANI.md`.
 
 | Plan | Fiyat | İçerik |
 |---|---|---|
-| Ücretsiz | 0 ₺ | 5 üretim/ay |
-| Başlangıç | 490 ₺/ay | 100 üretim, tüm pazaryerleri |
-| Pro | 990 ₺/ay | 500 üretim + sosyal medya |
-| Ajans | 2.500 ₺/ay | 2.000 üretim, 5 kullanıcı, toplu |
+| Ücretsiz | 0 ₺ | 2 üretim/ay |
+| Başlangıç | 245 ₺/ay | 100 üretim, tüm pazaryerleri |
+| Pro | 495 ₺/ay | 500 üretim + sosyal medya |
+| Ajans | 1.250 ₺/ay | 2.000 üretim, 5 kullanıcı, toplu |
 
 Yıllık ödemede %20 indirim (nakit akışı için).
 
