@@ -98,7 +98,15 @@ export async function generateContent(
     temperature: 0.7,
     max_tokens: 1500,
     messages: [
-      { role: "system", content: buildSystemPrompt(input.marketplace, input.language || "tr") },
+      {
+        role: "system",
+        content: buildSystemPrompt(
+          input.marketplace,
+          input.language || "tr",
+          input.sector || "genel",
+          input.brand
+        ),
+      },
       { role: "user", content: userContent },
     ],
   });

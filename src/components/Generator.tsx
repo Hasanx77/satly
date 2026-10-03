@@ -2,25 +2,33 @@
 
 import { useEffect, useRef, useState } from "react";
 import { LANGUAGES, MARKETPLACES, TONES } from "@/lib/prompts";
+import { FEATURE_SUGGESTIONS, SECTORS } from "@/lib/sectors";
 import { FREE_QUOTA } from "@/lib/plans";
 import type {
+  BrandVoice,
   GenerateResponse,
   GenerationResult,
   HistoryItem,
   Language,
   Marketplace,
+  Sector,
   Tone,
 } from "@/lib/types";
 import ResultCard from "./ResultCard";
 
 const HISTORY_KEY = "satly_history_v1";
 const USAGE_KEY = "satly_usage_v1";
+const BRAND_KEY = "satly_brand_v1";
 
 const EXAMPLES = [
   { name: "Kablosuz Bluetooth Kulaklık", category: "Elektronik", features: "20 saat pil, ANC, Type-C şarj" },
   { name: "Kaymaz Yoga Matı", category: "Spor", features: "6 mm kalınlık, taşıma askısı" },
   { name: "Seramik Kahve Kupası", category: "Mutfak", features: "350 ml, bulaşık makinesi uyumlu" },
 ];
+
+function brandHasData(b: BrandVoice): boolean {
+  return Boolean(b.name || b.toneNote || b.keywords || b.avoid);
+}
 
 async function downscaleImage(file: File): Promise<string> {
   const bitmap = await createImageBitmap(file);
@@ -45,6 +53,9 @@ export default function Generator() {
   const [marketplace, setMarketplace] = useState<Marketplace>("trendyol");
   const [tone, setTone] = useState<Tone>("profesyonel");
   const [language, setLanguage] = useState<Language>("tr");
+  const [sector, setSector] = useState<Sector>("genel");
+  const [brand, setBrand] = useState<BrandVoice>({});
+
   const [image, setImage] = useState<string | null>(null);
   const [imageName, setImageName] = useState("");
   const [imageBusy, setImageBusy] = useState(false);
@@ -65,12 +76,32 @@ export default function Generator() {
       if (h) setHistory(JSON.parse(h) as HistoryItem[]);
       const u = localStorage.getItem(USAGE_KEY);
       if (u) setUsed(Number(u) || 0);
+      const b = localStorage.getItem(BRAND_KEY);
+      if (b) setBrand(JSON.parse(b) as BrandVoice);
     } catch {
       /* yoksay */
     }
   }, []);
 
   const remaining = Math.max(0, FREE_QUOTA - used);
+
+  function updateBrand(patch: Partial<BrandVoice>) {
+    const next = { ...brand, ...patch };
+    setBrand(next);
+    try {
+      localStorage.setItem(BRAND_KEY, JSON.stringify(next));
+    } catch {
+      /* yoksay */
+    }
+  }
+
+  function addSuggestion(s: string) {
+    setFeatures((prev) => {
+      const parts = prev.split(",").map((p) => p.trim()).filter(Boolean);
+      if (parts.some((p) => p.toLowerCase() === s.toLowerCase())) return prev;
+      return [...parts, s].join(", ");
+    });
+  }
 
   async function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -113,7 +144,9 @@ export default function Generator() {
         marketplace,
         tone,
         language,
+        sector,
       };
+      if (brandHasData(brand)) payload.brand = brand;
       if (image) payload.image = image;
 
       const res = await fetch("/api/generate", {
@@ -136,7 +169,7 @@ export default function Generator() {
             ? crypto.randomUUID()
             : String(Date.now()),
         createdAt: new Date().toISOString(),
-        input: { name, category, features, marketplace, tone, language },
+        input: { name, category, features, marketplace, tone, language, sector },
         result: data.result,
       };
       const next = [item, ...history].slice(0, 20);
@@ -173,6 +206,7 @@ export default function Generator() {
     setMarketplace(item.input.marketplace);
     setTone((item.input.tone as Tone) || "profesyonel");
     if (item.input.language) setLanguage(item.input.language);
+    if (item.input.sector) setSector(item.input.sector);
     setResult(item.result);
     setMock(false);
     setError(null);
@@ -245,6 +279,21 @@ export default function Generator() {
             />
           </div>
           <div>
+            <label className="mb-1.5 block text-sm font-medium text-slate-300">Sektör</label>
+            <select
+              className="input-base"
+              aria-label="Sektör"
+              value={sector}
+              onChange={(e) => setSector(e.target.value as Sector)}
+            >
+              {SECTORS.map((s) => (
+                <option key={s.id} value={s.id} className="bg-ink-800">
+                  {s.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
             <label className="mb-1.5 block text-sm font-medium text-slate-300">Pazaryeri</label>
             <select
               className="input-base"
@@ -259,26 +308,20 @@ export default function Generator() {
               ))}
             </select>
           </div>
-        </div>
-
-        <div>
-          <label className="mb-1.5 block text-sm font-medium text-slate-300">Çıktı dili</label>
-          <div className="flex flex-wrap gap-2">
-            {LANGUAGES.map((l) => (
-              <button
-                type="button"
-                key={l.id}
-                onClick={() => setLanguage(l.id)}
-                className={`rounded-full border px-3.5 py-1.5 text-xs font-medium transition ${
-                  language === l.id
-                    ? "border-brand-400/50 bg-brand-500/20 text-brand-100"
-                    : "border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/20 hover:text-slate-200"
-                }`}
-              >
-                <span className="mr-1">{l.flag}</span>
-                {l.label}
-              </button>
-            ))}
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-slate-300">Çıktı dili</label>
+            <select
+              className="input-base"
+              aria-label="Çıktı dili"
+              value={language}
+              onChange={(e) => setLanguage(e.target.value as Language)}
+            >
+              {LANGUAGES.map((l) => (
+                <option key={l.id} value={l.id} className="bg-ink-800">
+                  {l.flag} {l.label}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
@@ -287,22 +330,32 @@ export default function Generator() {
             Özellikler (virgülle ayır)
           </label>
           <textarea
-            className="input-base min-h-[88px]"
+            className="input-base min-h-[84px]"
             aria-label="Özellikler"
             value={features}
             onChange={(e) => setFeatures(e.target.value)}
             placeholder="Örn: 20 saat pil ömrü, aktif gürültü engelleme, Type-C şarj"
             maxLength={1000}
           />
-          <p className="mt-1.5 text-xs text-slate-500">
-            Boş bırakırsan AI uydurma özellik eklemez, güvenli genel ifadeler kullanır.
-          </p>
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            <span className="text-xs text-slate-500">Hızlı ekle:</span>
+            {(FEATURE_SUGGESTIONS[sector] || []).map((s) => (
+              <button
+                type="button"
+                key={s}
+                onClick={() => addSuggestion(s)}
+                className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-0.5 text-xs text-slate-400 transition hover:border-brand-400/40 hover:text-slate-100"
+              >
+                + {s}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div>
           <label className="mb-1.5 block text-sm font-medium text-slate-300">
             Ürün görseli{" "}
-            <span className="font-normal text-slate-500">(isteğe bağlı · yapay zekâ görseli analiz eder)</span>
+            <span className="font-normal text-slate-500">(isteğe bağlı · yapay zekâ analiz eder)</span>
           </label>
           <input ref={fileRef} type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
           {image ? (
@@ -355,6 +408,45 @@ export default function Generator() {
             ))}
           </div>
         </div>
+
+        {/* MARKA SESİ */}
+        <details className="rounded-xl border border-white/10 bg-white/[0.02]">
+          <summary className="cursor-pointer list-none px-4 py-3 text-sm font-medium text-slate-300">
+            🎙️ Marka Sesi{" "}
+            <span className="text-xs font-normal text-slate-500">
+              {brandHasData(brand) ? "· kayıtlı" : "(isteğe bağlı)"}
+            </span>
+          </summary>
+          <div className="space-y-3 border-t border-white/5 px-4 py-3">
+            <p className="text-xs text-slate-500">
+              Markanızın sesini bir kez tanımlayın; tüm üretimlerde otomatik uygulanır.
+            </p>
+            <input
+              className="input-base"
+              placeholder="Marka adı (örn. Aurora)"
+              value={brand.name || ""}
+              onChange={(e) => updateBrand({ name: e.target.value })}
+            />
+            <input
+              className="input-base"
+              placeholder="Ton notu (örn. sıcak ama profesyonel, abartısız)"
+              value={brand.toneNote || ""}
+              onChange={(e) => updateBrand({ toneNote: e.target.value })}
+            />
+            <input
+              className="input-base"
+              placeholder="Mutlaka kullanılacak kelimeler (örn. el yapımı, %100 doğal)"
+              value={brand.keywords || ""}
+              onChange={(e) => updateBrand({ keywords: e.target.value })}
+            />
+            <input
+              className="input-base"
+              placeholder="Kaçınılacak ifadeler (örn. ucuz, indirim, garanti)"
+              value={brand.avoid || ""}
+              onChange={(e) => updateBrand({ avoid: e.target.value })}
+            />
+          </div>
+        </details>
 
         <button type="submit" className="btn-primary w-full py-3" disabled={loading || !name.trim()}>
           {loading ? (
@@ -418,7 +510,7 @@ export default function Generator() {
                     <span className="font-medium text-slate-100">{h.input.name}</span>
                     <span className="ml-2 text-xs text-slate-500">
                       {h.input.marketplace}
-                      {h.input.language === "en" ? " · EN" : ""}
+                      {h.input.language && h.input.language !== "tr" ? ` · ${h.input.language.toUpperCase()}` : ""}
                     </span>
                   </button>
                 </li>

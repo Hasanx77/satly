@@ -42,6 +42,11 @@ kelimeleri ve satış odaklı ton ile ürün ilanlarını zahmetsizce hazırlar.
 - 🗂️ **Toplu üretim** — Ürün listeni yapıştır, onlarca içeriği tek seferde üret, CSV indir.
 - 🧮 **Kâr hesaplayıcı** — Komisyon, KDV ve marja göre ideal satış fiyatı (ücretsiz araç).
 - 🔢 **Karakter sayacı** — Başlıklar pazaryeri limitine göre renkli uyarı verir.
+- 🎙️ **Marka sesi** — Markanızın tonunu ve kelimelerini bir kez tanımlayın; her üretimde uygulanır.
+- 🏷️ **10 sektör motoru** — Giyim, elektronik, kozmetik, gıda… sektöre özel yönergeler.
+- 🌐 **7 dil** — TR / EN / DE / FR / ES / AR / RU (e-ihracat desteği).
+- 📊 **İçerik kalite skoru** — Üretilen içeriğe anında 0–100 skor + kontrol listesi.
+- 🧰 **Ücretsiz araç seti** — Kâr/fiyat hesaplayıcı, anahtar kelime analizi, toplu fiyat, şablonlar.
 - 🛡️ **Uydurma yok** — Bilinmeyen teknik özellik uydurulmaz; güvenli ifade kullanılır.
 - 📋 **Kopyala & indir** — Tek tıkla kopyala ya da **CSV/TXT** indir (Excel uyumlu).
 - ⚡ **Demo modu** — OpenAI anahtarı olmadan da çalışır, örnek çıktı üretir.
@@ -104,8 +109,11 @@ satly/
 │  │  ├─ page.tsx                    # Ana sayfa
 │  │  ├─ panel/page.tsx              # Kullanıcı paneli
 │  │  ├─ toplu/page.tsx              # Toplu üretim
+│  │  ├─ sablonlar/page.tsx          # Şablon kütüphanesi
 │  │  ├─ araclar/baslik-uretici/     # Ücretsiz araç (SEO)
 │  │  ├─ araclar/kar-hesaplayici/    # Kâr & fiyat hesaplayıcı
+│  │  ├─ araclar/anahtar-kelime/     # Anahtar kelime analizi
+│  │  ├─ araclar/toplu-fiyat/        # Toplu fiyat hesaplayıcı
 │  │  └─ api/generate/route.ts       # AI üretim ucu
 │  ├─ components/                    # Navbar, Generator, ResultCard, Pricing, Faq
 │  └─ lib/                           # prompts, plans, types, rate-limit, supabase
@@ -132,6 +140,8 @@ satly/
 - [ ] Supabase hesap sistemi ve bulut geçmiş
 - [ ] iyzico/PayTR abonelik ve faturalama
 - [x] Toplu üretim + kâr hesaplayıcı + karakter sayacı + PWA
+- [x] Marka sesi + sektör motoru + 7 dil + kalite skoru + CSV import
+- [x] Anahtar kelime analizi + toplu fiyat + şablon kütüphanesi
 - [ ] Pazaryeri resmi API entegrasyonları
 
 ## 📄 Lisans

@@ -27,6 +27,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.7,
     },
+    {
+      url: `${base}/araclar/anahtar-kelime`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
+      url: `${base}/araclar/toplu-fiyat`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
+      url: `${base}/sablonlar`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
     { url: `${base}/panel`, lastModified: now, changeFrequency: "monthly", priority: 0.3 },
   ];
 }

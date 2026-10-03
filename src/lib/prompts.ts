@@ -1,30 +1,15 @@
-import type { GenerationInput, Language, Marketplace, Tone } from "./types";
+import type { BrandVoice, GenerationInput, Language, Marketplace, Sector, Tone } from "./types";
+import { SECTOR_RULES } from "./sectors";
 
 export const MARKETPLACES: {
   id: Marketplace;
   label: string;
   note: string;
 }[] = [
-  {
-    id: "trendyol",
-    label: "Trendyol",
-    note: "Kısa, anahtar kelime odaklı başlık (max ~100 karakter)",
-  },
-  {
-    id: "hepsiburada",
-    label: "Hepsiburada",
-    note: "Güven veren ton + net teknik özellikler",
-  },
-  {
-    id: "amazon",
-    label: "Amazon TR",
-    note: "5 madde (bullet point) + soru-cevap odaklı açıklama",
-  },
-  {
-    id: "shopify",
-    label: "Shopify / Kendi siten",
-    note: "Marka odaklı, uzun ve SEO uyumlu açıklama",
-  },
+  { id: "trendyol", label: "Trendyol", note: "Kısa, anahtar kelime odaklı başlık" },
+  { id: "hepsiburada", label: "Hepsiburada", note: "Güven veren ton + net teknik özellikler" },
+  { id: "amazon", label: "Amazon", note: "5 madde + soru-cevap odaklı açıklama" },
+  { id: "shopify", label: "Shopify / Kendi siten", note: "Marka odaklı, uzun ve SEO uyumlu" },
 ];
 
 export const TONES: { id: Tone; label: string }[] = [
@@ -37,6 +22,11 @@ export const TONES: { id: Tone; label: string }[] = [
 export const LANGUAGES: { id: Language; label: string; flag: string }[] = [
   { id: "tr", label: "Türkçe", flag: "🇹🇷" },
   { id: "en", label: "English", flag: "🇬🇧" },
+  { id: "de", label: "Deutsch", flag: "🇩🇪" },
+  { id: "fr", label: "Français", flag: "🇫🇷" },
+  { id: "es", label: "Español", flag: "🇪🇸" },
+  { id: "ar", label: "العربية", flag: "🇸🇦" },
+  { id: "ru", label: "Русский", flag: "🇷🇺" },
 ];
 
 // Pazaryerine göre önerilen başlık karakter limiti (uyarı için).
@@ -53,9 +43,9 @@ Kurallar:
 
 1. Akıcı, doğal ve satış odaklı metin yaz.
 2. ASLA uydurma teknik özellik, marka, sertifika, garanti süresi veya sayı ekleme.
-   Kullanıcı bir özellik vermediyse onu yazma; onun yerine genel ve güvenli bir ifade kullan.
-   Bir görsel verildiyse, SADECE görselde gerçekten görünen özellikleri (renk, biçim, tür, adet,
-   malzeme izlenimi) betimleyebilirsin; görünmeyen teknik detayı uydurma.
+   Kullanıcı bir özellik vermediyse onu yazma; güvenli ve genel bir ifade kullan.
+   Görsel verildiyse SADECE görselde gerçekten görünen özellikleri (renk, biçim, tür, malzeme
+   izlenimi) betimleyebilirsin; görünmeyen teknik detayı uydurma.
 3. Abartılı ve yanıltıcı ifadeler ("dünyanın en iyisi", "%100 garanti") kullanma.
 4. Anahtar kelimeleri doğal biçimde metne yerleştir, keyword stuffing yapma.
 5. Çıktıyı SADECE aşağıdaki JSON şemasına uygun ver, başka açıklama yazma.
@@ -72,55 +62,67 @@ JSON ŞEMASI:
 `.trim();
 
 const LANGUAGE_RULES: Record<Language, string> = {
-  tr: "DİL: Tüm çıktı, başlıklar ve anahtar kelimeler dahil, TÜRKÇE olacak.",
-  en: "LANGUAGE: All output — titles, descriptions, features, keywords and social caption — must be in ENGLISH.",
+  tr: "DİL: Tüm çıktı (başlık, açıklama, özellik, kelimeler, sosyal metin) TÜRKÇE olacak.",
+  en: "LANGUAGE: All output must be in ENGLISH.",
+  de: "SPRACHE: Die gesamte Ausgabe muss auf DEUTSCH sein.",
+  fr: "LANGUE : Toute la sortie doit être en FRANÇAIS.",
+  es: "IDIOMA: Toda la salida debe estar en ESPAÑOL.",
+  ar: "اللغة: يجب أن يكون كل الناتج باللغة العربية.",
+  ru: "ЯЗЫК: Весь вывод должен быть на РУССКОМ языке.",
 };
 
 const MARKET_RULES: Record<Marketplace, string> = {
   trendyol: `
 PAZARYERİ: Trendyol
-- Başlık: 3 farklı varyant üret. Her biri 60-100 karakter arası, anahtar kelimeyle başlasın.
-- Kısa açıklama: Trendyol ürün kartı için 1-2 cümle.
-- Uzun açıklama: Madde madde okunabilir, kategoriye uygun.
-- Özellikler: 5-8 madde, satın alma kararını kolaylaştıracak şekilde.
-- Anahtar kelimeler: Trendyol arama kutusunda kullanılan doğal aramalar (8-12 adet).`,
+- Başlık: 3 varyant, 60-100 karakter, anahtar kelimeyle başlasın.
+- Özellikler: 5-8 madde. Anahtar kelimeler: 8-12 doğal arama.`,
   hepsiburada: `
 PAZARYERİ: Hepsiburada
-- Başlık: 3 varyant, marka/model + temel özellik + kullanım amacı kalıbında.
-- Ton: güven veren, kurumsal, net.
-- Özellikler: teknik tablo mantığında (materyal, ölçü, renk, uyumluluk) 6-10 madde.
-- Uzun açıklama: garanti/iade/kullanım bilgisi vurgusu (uydurma süre verme).
-- Anahtar kelimeler: 8-12 adet.`,
+- Başlık: 3 varyant, marka/model + temel özellik + kullanım amacı.
+- Ton: güven veren, kurumsal. Özellikler: teknik tablo mantığında 6-10 madde.`,
   amazon: `
 PAZARYERİ: Amazon
-- Başlık: 3 varyant, 150 karakteri geçmesin; marka + ürün + özellik + boyut/renk.
-- Özellikler: TAM 5 madde, her biri fayda odaklı (bullet point).
-- Uzun açıklama: müşteri sorularını yanıtlar nitelikte (neden almalı, nasıl kullanılır).
-- Anahtar kelimeler: Amazon arama terimleri 10-15 adet.
-- Kısa açıklama: 1 cümle.`,
+- Başlık: 3 varyant, 150 karakteri geçmesin.
+- Özellikler: TAM 5 madde, fayda odaklı. Açıklama müşteri sorularını yanıtlasın.`,
   shopify: `
-PAZARYERİ: Shopify / kendi web sitesi
-- Başlık: 3 varyant, marka sesi güçlü, SEO başlığı gibi (60-70 karakter ideal).
-- Ton: hikâyeleştirici, marka odaklı.
-- Uzun açıklama: 3-4 paragraf; ürünün çözdüğü problemi ve deneyimi anlatsın.
-- Özellikler: 6-8 madde.
-- Anahtar kelimeler: Google aramalarına uygun 8-12 adet (SEO).
-- Kısa açıklama: 2 cümle.`,
+PAZARYERİ: Shopify / kendi site
+- Başlık: 3 varyant, SEO başlığı (60-70 karakter). Ton: hikâyeleştirici, marka odaklı.
+- Uzun açıklama: 3-4 paragraf. Kelimeler: Google aramalarına uygun 8-12 adet.`,
 };
 
 const TONE_RULES: Record<Tone, string> = {
   profesyonel: "Ton: net, güvenilir, gereksiz süslemesiz.",
-  samimi: "Ton: sıcak, samimi, sanki bir arkadaş öneriyormuş gibi.",
+  samimi: "Ton: sıcak, samimi, bir arkadaş öneriyormuş gibi.",
   premium: "Ton: sofistike, seçkin, kalite vurgusu yapan.",
   genc: "Ton: enerjik, genç, kısa cümleli, güncel.",
 };
 
-export function buildSystemPrompt(marketplace: Marketplace, language: Language = "tr"): string {
+function brandBlock(brand?: BrandVoice): string {
+  if (!brand) return "";
+  const parts: string[] = [];
+  if (brand.name?.trim()) parts.push(`- Marka adı: ${brand.name.trim()}`);
+  if (brand.toneNote?.trim()) parts.push(`- Marka tonu: ${brand.toneNote.trim()}`);
+  if (brand.keywords?.trim()) parts.push(`- Mutlaka kullanılacak kelimeler: ${brand.keywords.trim()}`);
+  if (brand.avoid?.trim()) parts.push(`- ASLA kullanılmayacak ifadeler: ${brand.avoid.trim()}`);
+  if (parts.length === 0) return "";
+  return "MARKA SESİ (buna kesinlikle uy):\n" + parts.join("\n");
+}
+
+export function buildSystemPrompt(
+  marketplace: Marketplace,
+  language: Language = "tr",
+  sector: Sector = "genel",
+  brand?: BrandVoice
+): string {
   return [
     BASE_RULES,
     LANGUAGE_RULES[language] || LANGUAGE_RULES.tr,
+    SECTOR_RULES[sector] || SECTOR_RULES.genel,
     MARKET_RULES[marketplace],
-  ].join("\n\n");
+    brandBlock(brand),
+  ]
+    .filter(Boolean)
+    .join("\n\n");
 }
 
 export function buildUserPrompt(input: GenerationInput, withImage = false): string {
@@ -134,7 +136,7 @@ export function buildUserPrompt(input: GenerationInput, withImage = false): stri
   ];
   if (withImage) {
     lines.push(
-      "Ek olarak bir ürün görseli verildi. Görselde GÖRÜNEN özellikleri (renk, biçim, tür, malzeme izlenimi) açıklamana katabilirsin; görünmeyen teknik detayı uydurma."
+      "Ek olarak bir ürün görseli verildi. Görselde GÖRÜNEN özellikleri (renk, biçim, tür, malzeme izlenimi) katabilirsin; görünmeyeni uydurma."
     );
   }
   lines.push("", TONE_RULES[tone] || TONE_RULES.profesyonel, "", "JSON çıktısını ver.");

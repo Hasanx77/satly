@@ -118,6 +118,17 @@ export default function ResultCard({
   const limit = TITLE_LIMITS[marketplace] ?? 100;
   const waText = `${result.titleOptions[0] ?? ""}\n\n${result.shortDescription}\n\n(Satly ile üretildi)`;
 
+  const checks = [
+    { label: "Başlık limitine uygun", ok: result.titleOptions.some((t) => t.length <= limit && t.length >= 30) },
+    { label: "3 başlık varyantı", ok: result.titleOptions.length >= 3 },
+    { label: "Zengin özellik listesi (4+)", ok: result.features.length >= 4 },
+    { label: "Anahtar kelime (6+)", ok: result.keywords.length >= 6 },
+    { label: "Detaylı açıklama (200+ karakter)", ok: result.longDescription.length >= 200 },
+    { label: "Kısa açıklama dolu", ok: result.shortDescription.length >= 40 },
+    { label: "Sosyal medya metni", ok: result.socialCaption.length >= 15 },
+  ];
+  const score = Math.round((checks.filter((c) => c.ok).length / checks.length) * 100);
+
   return (
     <div className="space-y-3">
       {mock && (
@@ -125,6 +136,31 @@ export default function ResultCard({
           Demo modu: OpenAI anahtarı tanımlı olmadığı için örnek çıktı gösteriliyor.
         </div>
       )}
+
+      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+        <div className="mb-3 flex items-center justify-between">
+          <h4 className="text-sm font-semibold text-slate-200">İçerik Kalite Skoru</h4>
+          <span
+            className={`rounded-full px-3 py-1 text-sm font-bold ${
+              score >= 80
+                ? "bg-emerald-500/15 text-emerald-300"
+                : score >= 60
+                  ? "bg-amber-500/15 text-amber-300"
+                  : "bg-rose-500/15 text-rose-300"
+            }`}
+          >
+            {score}/100
+          </span>
+        </div>
+        <ul className="grid gap-1.5 sm:grid-cols-2">
+          {checks.map((c) => (
+            <li key={c.label} className="flex items-center gap-2 text-xs">
+              <span className={c.ok ? "text-emerald-400" : "text-rose-400"}>{c.ok ? "✓" : "✗"}</span>
+              <span className={c.ok ? "text-slate-300" : "text-slate-500"}>{c.label}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <Section title="Başlık Varyantları" copyText={result.titleOptions.join("\n")}>
         <ul className="space-y-2">

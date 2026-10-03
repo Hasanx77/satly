@@ -12,7 +12,19 @@ const itemSchema = z.object({
   features: z.string().max(1000).optional().default(""),
   marketplace: z.enum(["trendyol", "hepsiburada", "amazon", "shopify"]),
   tone: z.enum(["profesyonel", "samimi", "premium", "genc"]).optional().default("profesyonel"),
-  language: z.enum(["tr", "en"]).optional().default("tr"),
+  language: z.enum(["tr", "en", "de", "fr", "es", "ar", "ru"]).optional().default("tr"),
+  sector: z
+    .enum(["genel", "giyim", "elektronik", "kozmetik", "ev_yasam", "spor", "gida", "anne_bebek", "evcil_hayvan", "oto"])
+    .optional()
+    .default("genel"),
+  brand: z
+    .object({
+      name: z.string().max(120).optional(),
+      toneNote: z.string().max(300).optional(),
+      keywords: z.string().max(300).optional(),
+      avoid: z.string().max(300).optional(),
+    })
+    .optional(),
 });
 
 const bulkSchema = z.object({

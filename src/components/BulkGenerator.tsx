@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { LANGUAGES, MARKETPLACES, TONES } from "@/lib/prompts";
 import type { GenerationResult, Language, Marketplace, Tone } from "@/lib/types";
 
@@ -27,6 +27,23 @@ export default function BulkGenerator() {
   const [error, setError] = useState<string | null>(null);
   const [rows, setRows] = useState<BulkRow[]>([]);
   const [mock, setMock] = useState(false);
+
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    const raw = await file.text();
+    const lines = raw.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+    const start = /^(urun|ürün|name|ad|başlık|baslik|product|title)/i.test(lines[0] || "") ? 1 : 0;
+    const formatted = lines
+      .slice(start)
+      .map((line) => (line.includes("|") ? line : line.split(/[\t;]/).map((s) => s.trim()).join(" | ")))
+      .slice(0, MAX_ITEMS)
+      .join("\n");
+    setText(formatted);
+  }
 
   const parsedCount = text
     .split("\n")
@@ -133,6 +150,25 @@ export default function BulkGenerator() {
         <p className="text-xs text-slate-500">
           {parsedCount} satır algılandı · en fazla {MAX_ITEMS} işlenir.
         </p>
+        <div className="flex flex-wrap items-center gap-3">
+          <input
+            ref={fileRef}
+            type="file"
+            accept=".csv,.txt,text/csv,text/plain"
+            onChange={handleFile}
+            className="hidden"
+          />
+          <button
+            type="button"
+            onClick={() => fileRef.current?.click()}
+            className="text-xs font-medium text-brand-300 transition hover:text-brand-200"
+          >
+            ⬆ CSV/TXT dosyasından yükle
+          </button>
+          <span className="text-xs text-slate-600">
+            (sütunlar: ürün; kategori; özellikler)
+          </span>
+        </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>

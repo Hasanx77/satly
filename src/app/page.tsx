@@ -130,6 +130,15 @@ const STEPS = [
   },
 ];
 
+const TOOLS = [
+  { href: "/araclar/baslik-uretici", title: "Başlık & Açıklama Üretici", text: "Ürün adından satışa hazır içerik." },
+  { href: "/araclar/kar-hesaplayici", title: "Kâr & Fiyat Hesaplayıcı", text: "Komisyon, KDV ve marja göre fiyat." },
+  { href: "/araclar/anahtar-kelime", title: "Anahtar Kelime Analizi", text: "Rakip ilanlarından kelime çıkar." },
+  { href: "/araclar/toplu-fiyat", title: "Toplu Fiyat Hesaplayıcı", text: "Tüm listeniz için fiyat öner." },
+  { href: "/sablonlar", title: "Şablon Kütüphanesi", text: "Kategori kategori hazır kalıplar." },
+  { href: "/toplu", title: "Toplu Üretim", text: "Onlarca ürünü tek seferde üret." },
+];
+
 // NOT: Aşağıdaki yorum kartları ÖRNEKTİR (placeholder). Lansmandan önce gerçek
 // müşteri yorumlarınızla değiştirin.
 const TESTIMONIALS = [
@@ -355,6 +364,30 @@ export default function Home() {
         </div>
       </section>
 
+      {/* UCRETSIZ ARACLAR */}
+      <section className="border-t border-white/5 py-24">
+        <div className="container-x">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="section-label">Ücretsiz araçlar</p>
+            <h2 className="mt-3 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl">
+              Kayıt olmadan <span className="text-gradient-brand">hemen kullan</span>
+            </h2>
+            <p className="mt-4 text-slate-400">Satışa yardımcı ücretsiz araçlar — hepsi tek tık.</p>
+          </div>
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {TOOLS.map((t) => (
+              <Link key={t.href} href={t.href} className="card group transition hover:border-white/20">
+                <h3 className="font-display text-base font-semibold text-white transition group-hover:text-brand-200">
+                  {t.title}
+                </h3>
+                <p className="mt-1 text-sm text-slate-400">{t.text}</p>
+                <span className="mt-3 inline-block text-sm font-medium text-brand-300">Aç →</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section id="sss" className="border-t border-white/5 py-24">
         <div className="container-x">
@@ -434,6 +467,16 @@ export default function Home() {
               <li>
                 <Link href="/toplu" className="hover:text-slate-300">
                   Toplu üretim
+                </Link>
+              </li>
+              <li>
+                <Link href="/araclar/anahtar-kelime" className="hover:text-slate-300">
+                  Anahtar kelime
+                </Link>
+              </li>
+              <li>
+                <Link href="/sablonlar" className="hover:text-slate-300">
+                  Şablonlar
                 </Link>
               </li>
               <li>
