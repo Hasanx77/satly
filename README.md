@@ -1,89 +1,136 @@
-# Satly
+<div align="center">
 
-E-ticaret satıcıları için **Türkçe yapay zekâ destekli ürün içeriği üreteci**. Ürün adını
-yazarsın; **başlık varyantları, kısa/uzun açıklama, özellik listesi, SEO anahtar kelimeleri
-ve sosyal medya metni** üretir. Trendyol, Hepsiburada, Amazon TR ve Shopify formatlarına
-uygun çıktı verir.
+# ⚡ Satly
 
-> Durum: **Beta / doğrulama aşaması.** Ödeme altyapısı yok; üretim geçmişi tarayıcıda
-> (localStorage) tutulur.
+### E-ticaret metnini yapay zekâya bırak.
+
+Ürün adını yaz; **30 saniyede** satışa hazır başlık, açıklama, özellik listesi ve
+SEO anahtar kelimelerini al. **Trendyol · Hepsiburada · Amazon TR · Shopify** için
+Türkçe yapay zekâ.
+
+<br />
+
+![Next.js](https://img.shields.io/badge/Next.js-14-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-gpt--4o--mini-412991?style=for-the-badge&logo=openai&logoColor=white)
+![Durum](https://img.shields.io/badge/durum-beta-8b5cf6?style=for-the-badge)
+
+<br />
+
+![Satly ana sayfa](docs/screenshots/hero.png)
+
+</div>
 
 ---
 
-## Hızlı Başlangıç (yerel)
+## ✨ Nedir?
+
+Satly, e-ticaret satıcılarının saatler süren ürün metni yazma işini saniyelere indiren
+bir **Türkçe yapay zekâ içerik üretecidir**. Pazaryerine özel format, SEO anahtar
+kelimeleri ve satış odaklı ton ile ürün ilanlarını zahmetsizce hazırlar.
+
+## 🚀 Öne çıkan özellikler
+
+- 🧠 **Pazaryerine özel üretim** — Trendyol'un kısa başlığı, Amazon'un 5 maddesi,
+  Shopify'ın marka anlatımı; her kanala uygun çıktı.
+- 🔍 **SEO anahtar kelimeleri** — Ürününüzün aramada bulunmasını sağlayan doğal terimler.
+- 🎭 **4 üslup** — Profesyonel, samimi, premium, genç & enerjik.
+- 🛡️ **Uydurma yok** — Bilinmeyen teknik özellik uydurulmaz; güvenli ifade kullanılır.
+- 📋 **Kopyala & indir** — Tek tıkla kopyala ya da **CSV/TXT** indir (Excel uyumlu).
+- ⚡ **Demo modu** — OpenAI anahtarı olmadan da çalışır, örnek çıktı üretir.
+- 🔒 **Güvenli** — API anahtarı asla tarayıcıya gönderilmez; hız sınırı ile korunur.
+- 🗂️ **Panel & geçmiş** — Üretilen içerikleri saklar.
+
+## 📸 Ekran görüntüleri
+
+<div align="center">
+
+### Tüm sayfa
+![Satly tam sayfa](docs/screenshots/full-page.jpg)
+
+### Üretim sonucu
+![Satly sonuç ekranı](docs/screenshots/result.png)
+
+</div>
+
+## ⚙️ Hızlı Başlangıç
 
 ```bash
-cd "satly"
+git clone https://github.com/Hasanx77/satly.git
+cd satly
 npm install
-cp .env.example .env.local   # Windows: copy .env.example .env.local
+cp .env.example .env.local     # Windows: copy .env.example .env.local
 npm run dev
 ```
 
-Tarayıcıda `http://localhost:3000` adresini aç.
+Tarayıcıda **http://localhost:3000** adresini aç.
 
-- **OpenAI anahtarı yoksa** uygulama otomatik olarak **demo modu**nda çalışır ve örnek
-  çıktı üretir. Yani anahtar olmadan da arayüzü test edebilirsin.
-- Gerçek üretim için `.env.local` içine `OPENAI_API_KEY=sk-...` ekle ve sunucuyu yeniden başlat.
+> 💡 `.env.local` içine `OPENAI_API_KEY` girmezsen uygulama **demo modu**nda çalışır ve
+> örnek çıktı üretir. Gerçek yapay zekâ için anahtarını ekle.
 
-## Ortam Değişkenleri
+## 🔑 Ortam Değişkenleri
 
-| Değişken | Zorunlu mu? | Açıklama |
+| Değişken | Zorunlu | Açıklama |
 |---|---|---|
-| `OPENAI_API_KEY` | Gerçek üretim için evet | Yoksa demo modu |
+| `OPENAI_API_KEY` | Gerçek üretim için | OpenAI API anahtarı (yoksa demo modu) |
 | `OPENAI_MODEL` | Hayır | Varsayılan: `gpt-4o-mini` |
-| `NEXT_PUBLIC_SUPABASE_URL` | Hayır | Hesap/abonelik için (2. aşama) |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Hayır | Yukarıdakiyle birlikte |
-| `IYZICO_API_KEY` / `IYZICO_SECRET_KEY` | Hayır | Ödeme (3. aşama) |
-| `NEXT_PUBLIC_SITE_URL` | Önerilir | Sitemap/robots ve ödeme dönüş URL'leri |
+| `NEXT_PUBLIC_SITE_URL` | Önerilir | Site adresi (sitemap/robots) |
+| `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Hayır | Hesap fazı (2. aşama) |
 
-## Komutlar
+## 🛠️ Teknoloji
+
+| Katman | Teknoloji |
+|---|---|
+| Çatı | Next.js 14 (App Router) + TypeScript |
+| Arayüz | Tailwind CSS |
+| Yapay zekâ | OpenAI (`gpt-4o-mini`) |
+| Doğrulama | Zod |
+| Veritabanı (planlı) | Supabase (PostgreSQL + RLS) |
+| Barındırma | Vercel |
+
+## 📁 Proje Yapısı
+
+```
+satly/
+├─ src/
+│  ├─ app/
+│  │  ├─ page.tsx                    # Ana sayfa
+│  │  ├─ panel/page.tsx              # Kullanıcı paneli
+│  │  ├─ araclar/baslik-uretici/     # Ücretsiz araç sayfası (SEO)
+│  │  └─ api/generate/route.ts       # AI üretim ucu
+│  ├─ components/                    # Navbar, Generator, ResultCard, Pricing, Faq
+│  └─ lib/                           # prompts, plans, types, rate-limit, supabase
+├─ supabase/schema.sql               # Veritabanı şeması
+├─ docs/                             # GTM, roadmap, devir raporu
+└─ .env.example
+```
+
+## 🧪 Komutlar
 
 | Komut | İş |
 |---|---|
 | `npm run dev` | Geliştirme sunucusu |
 | `npm run build` | Üretim derlemesi |
 | `npm run start` | Derlenmiş sürümü çalıştır |
-| `npm run lint` | Kod denetimi |
+| `npm run test:api` | API ve rota testleri (sunucu açıkken) |
 
-## Proje Yapısı
+## 🗺️ Yol Haritası
 
-```
-satly/
-├─ src/
-│  ├─ app/
-│  │  ├─ page.tsx                      # Ana sayfa (hero + üretici + fiyatlar)
-│  │  ├─ layout.tsx / globals.css      # Kök yerleşim + stiller
-│  │  ├─ panel/page.tsx                # Kullanıcı paneli (yerel geçmiş)
-│  │  ├─ araclar/baslik-uretici/page.tsx  # SEO / ücretsiz araç sayfası
-│  │  ├─ robots.ts / sitemap.ts        # SEO
-│  │  └─ api/
-│  │     ├─ generate/route.ts          # AI üretim ucu (hız sınırlı)
-│  │     └─ health/route.ts            # Sağlık kontrolü
-│  ├─ components/                      # Navbar, Generator, ResultCard
-│  └─ lib/                             # prompts, plans, types, supabase, rate-limit
-├─ supabase/schema.sql                 # Veritabanı + RLS şeması
-├─ docs/                               # İş planı, GTM, devir raporu
-└─ .env.example
-```
+- [x] MVP: üretim motoru, kopyala/indir, panel, demo modu
+- [x] Premium koyu tema + fiyatlandırma + SSS
+- [x] API test paketi
+- [ ] Supabase hesap sistemi ve bulut geçmiş
+- [ ] iyzico/PayTR abonelik ve faturalama
+- [ ] Toplu üretim (CSV/Excel yükleme)
+- [ ] Pazaryeri resmi API entegrasyonları
 
-## Vercel'e Dağıtım
+## 📄 Lisans
 
-1. [vercel.com](https://vercel.com) → New Project → bu klasörü GitHub'a push edip bağla
-   (veya `npx vercel`).
-2. Environment Variables: `OPENAI_API_KEY`, `NEXT_PUBLIC_SITE_URL` (vercel domain'in).
-3. Deploy. Bitti.
+Özel proje. © 2026 Satly — Tüm hakları saklıdır.
 
-> `.env.local` dosyasını **asla** GitHub'a gönderme (`.gitignore` hallediyor).
+---
 
-## Yol Haritası ve İş Planı
-
-- `docs/HANDOVER.md` — bu projede ne yapıldı, sırada ne var (önce bunu oku)
-- `docs/GTM.md` — pazara giriş / müşteri bulma planı
-- `docs/PAZARLAMA-MESAJLARI.md` — hazır DM/e-posta/grup mesajları
-- `docs/ICERIK-PLANI.md` — SEO içerik takvimi ve anahtar kelimeler
-- `docs/ROADMAP.md` — teknik yol haritası (aşama aşama)
-
-## Lisans / Sorumluluk
-
-Beta yazılım. Üretilen metinleri yayınlamadan önce kontrol et. AI, kullanıcının vermediği
-teknik özellikleri uydurmayacak şekilde yönlendirilmiştir; ancak yine de doğrula.
+<div align="center">
+<sub>Satly ile daha az yaz, daha çok sat. ⚡</sub>
+</div>
