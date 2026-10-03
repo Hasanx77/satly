@@ -39,6 +39,14 @@ export const LANGUAGES: { id: Language; label: string; flag: string }[] = [
   { id: "en", label: "English", flag: "🇬🇧" },
 ];
 
+// Pazaryerine göre önerilen başlık karakter limiti (uyarı için).
+export const TITLE_LIMITS: Record<Marketplace, number> = {
+  trendyol: 100,
+  hepsiburada: 120,
+  amazon: 150,
+  shopify: 70,
+};
+
 const BASE_RULES = `
 Sen dünyanın en iyi e-ticaret metin yazarı ve SEO uzmanısın.
 Kurallar:

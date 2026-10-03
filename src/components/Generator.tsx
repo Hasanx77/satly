@@ -16,6 +16,12 @@ import ResultCard from "./ResultCard";
 const HISTORY_KEY = "satly_history_v1";
 const USAGE_KEY = "satly_usage_v1";
 
+const EXAMPLES = [
+  { name: "Kablosuz Bluetooth Kulaklık", category: "Elektronik", features: "20 saat pil, ANC, Type-C şarj" },
+  { name: "Kaymaz Yoga Matı", category: "Spor", features: "6 mm kalınlık, taşıma askısı" },
+  { name: "Seramik Kahve Kupası", category: "Mutfak", features: "350 ml, bulaşık makinesi uyumlu" },
+];
+
 async function downscaleImage(file: File): Promise<string> {
   const bitmap = await createImageBitmap(file);
   const maxDim = 1024;
@@ -60,7 +66,7 @@ export default function Generator() {
       const u = localStorage.getItem(USAGE_KEY);
       if (u) setUsed(Number(u) || 0);
     } catch {
-      /* localStorage erişilemezse geç */
+      /* yoksay */
     }
   }, []);
 
@@ -147,6 +153,19 @@ export default function Generator() {
     }
   }
 
+  function handleFormKeyDown(e: React.KeyboardEvent<HTMLFormElement>) {
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+      e.preventDefault();
+      e.currentTarget.requestSubmit();
+    }
+  }
+
+  function applyExample(ex: (typeof EXAMPLES)[number]) {
+    setName(ex.name);
+    setCategory(ex.category);
+    setFeatures(ex.features);
+  }
+
   function loadHistory(item: HistoryItem) {
     setName(item.input.name);
     setCategory(item.input.category || "");
@@ -157,9 +176,7 @@ export default function Generator() {
     setResult(item.result);
     setMock(false);
     setError(null);
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function clearHistory() {
@@ -172,12 +189,11 @@ export default function Generator() {
       {/* FORM */}
       <form
         onSubmit={handleSubmit}
+        onKeyDown={handleFormKeyDown}
         className="glass space-y-5 rounded-2xl p-6 shadow-[0_0_60px_-30px_rgba(139,92,246,0.9)]"
       >
         <div className="flex items-center justify-between">
-          <h3 className="font-display text-lg font-semibold text-white">
-            Ürün bilgilerini gir
-          </h3>
+          <h3 className="font-display text-lg font-semibold text-white">Ürün bilgilerini gir</h3>
           <span
             className={`rounded-full border px-3 py-1 text-xs font-medium ${
               remaining > 0
@@ -189,10 +205,22 @@ export default function Generator() {
           </span>
         </div>
 
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-xs text-slate-500">Örnek doldur:</span>
+          {EXAMPLES.map((ex) => (
+            <button
+              type="button"
+              key={ex.name}
+              onClick={() => applyExample(ex)}
+              className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs text-slate-300 transition hover:border-brand-400/40 hover:text-white"
+            >
+              {ex.name}
+            </button>
+          ))}
+        </div>
+
         <div>
-          <label className="mb-1.5 block text-sm font-medium text-slate-300">
-            Ürün adı *
-          </label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-300">Ürün adı *</label>
           <input
             className="input-base"
             aria-label="Ürün adı"
@@ -206,9 +234,7 @@ export default function Generator() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-slate-300">
-              Kategori
-            </label>
+            <label className="mb-1.5 block text-sm font-medium text-slate-300">Kategori</label>
             <input
               className="input-base"
               aria-label="Kategori"
@@ -219,9 +245,7 @@ export default function Generator() {
             />
           </div>
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-slate-300">
-              Pazaryeri
-            </label>
+            <label className="mb-1.5 block text-sm font-medium text-slate-300">Pazaryeri</label>
             <select
               className="input-base"
               aria-label="Pazaryeri"
@@ -237,11 +261,8 @@ export default function Generator() {
           </div>
         </div>
 
-        {/* Dil */}
         <div>
-          <label className="mb-1.5 block text-sm font-medium text-slate-300">
-            Çıktı dili
-          </label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-300">Çıktı dili</label>
           <div className="flex flex-wrap gap-2">
             {LANGUAGES.map((l) => (
               <button
@@ -278,29 +299,16 @@ export default function Generator() {
           </p>
         </div>
 
-        {/* Görsel */}
         <div>
           <label className="mb-1.5 block text-sm font-medium text-slate-300">
             Ürün görseli{" "}
             <span className="font-normal text-slate-500">(isteğe bağlı · yapay zekâ görseli analiz eder)</span>
           </label>
-
-          <input
-            ref={fileRef}
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="hidden"
-          />
-
+          <input ref={fileRef} type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
           {image ? (
             <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-2.5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={image}
-                alt="Ürün görseli"
-                className="h-14 w-14 rounded-lg object-cover"
-              />
+              <img src={image} alt="Ürün görseli" className="h-14 w-14 rounded-lg object-cover" />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm text-slate-200">{imageName || "görsel"}</p>
                 <p className="text-xs text-slate-500">Analiz edilecek</p>
@@ -348,11 +356,7 @@ export default function Generator() {
           </div>
         </div>
 
-        <button
-          type="submit"
-          className="btn-primary w-full py-3"
-          disabled={loading || !name.trim()}
-        >
+        <button type="submit" className="btn-primary w-full py-3" disabled={loading || !name.trim()}>
           {loading ? (
             <>
               <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
@@ -362,6 +366,10 @@ export default function Generator() {
             "İçerik Üret"
           )}
         </button>
+        <p className="text-center text-[11px] text-slate-500">
+          İpucu: <kbd className="rounded border border-white/10 bg-white/[0.05] px-1">Ctrl</kbd> +{" "}
+          <kbd className="rounded border border-white/10 bg-white/[0.05] px-1">Enter</kbd> ile hızlı üret
+        </p>
 
         {error && (
           <div className="rounded-xl border border-rose-400/20 bg-rose-500/10 px-3.5 py-2.5 text-sm text-rose-300">
@@ -373,7 +381,7 @@ export default function Generator() {
       {/* SONUÇ */}
       <div className="space-y-4">
         {result ? (
-          <ResultCard result={result} mock={mock} />
+          <ResultCard result={result} mock={mock} marketplace={marketplace} />
         ) : (
           <div className="glass flex min-h-[360px] flex-col items-center justify-center rounded-2xl text-center">
             <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-2xl">
@@ -390,9 +398,7 @@ export default function Generator() {
         {history.length > 0 && (
           <div className="glass rounded-2xl p-5">
             <div className="mb-3 flex items-center justify-between">
-              <h4 className="text-sm font-semibold text-slate-200">
-                Geçmiş ({history.length})
-              </h4>
+              <h4 className="text-sm font-semibold text-slate-200">Geçmiş ({history.length})</h4>
               <button
                 type="button"
                 onClick={clearHistory}

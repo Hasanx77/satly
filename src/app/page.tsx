@@ -427,6 +427,16 @@ export default function Home() {
                 </Link>
               </li>
               <li>
+                <Link href="/araclar/kar-hesaplayici" className="hover:text-slate-300">
+                  Kâr hesaplayıcı
+                </Link>
+              </li>
+              <li>
+                <Link href="/toplu" className="hover:text-slate-300">
+                  Toplu üretim
+                </Link>
+              </li>
+              <li>
                 <Link href="/panel" className="hover:text-slate-300">
                   Panelim
                 </Link>

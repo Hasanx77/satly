@@ -39,6 +39,9 @@ kelimeleri ve satış odaklı ton ile ürün ilanlarını zahmetsizce hazırlar.
 - 📷 **Görselden içerik** — Ürün fotoğrafını yükle; yapay zekâ görselde görünen
   özellikleri (renk, biçim, tür) açıklamaya katar.
 - 🌍 **Çoklu dil** — Türkçe veya İngilizce çıktı (ihracatçı satıcılar için).
+- 🗂️ **Toplu üretim** — Ürün listeni yapıştır, onlarca içeriği tek seferde üret, CSV indir.
+- 🧮 **Kâr hesaplayıcı** — Komisyon, KDV ve marja göre ideal satış fiyatı (ücretsiz araç).
+- 🔢 **Karakter sayacı** — Başlıklar pazaryeri limitine göre renkli uyarı verir.
 - 🛡️ **Uydurma yok** — Bilinmeyen teknik özellik uydurulmaz; güvenli ifade kullanılır.
 - 📋 **Kopyala & indir** — Tek tıkla kopyala ya da **CSV/TXT** indir (Excel uyumlu).
 - ⚡ **Demo modu** — OpenAI anahtarı olmadan da çalışır, örnek çıktı üretir.
@@ -100,7 +103,9 @@ satly/
 │  ├─ app/
 │  │  ├─ page.tsx                    # Ana sayfa
 │  │  ├─ panel/page.tsx              # Kullanıcı paneli
-│  │  ├─ araclar/baslik-uretici/     # Ücretsiz araç sayfası (SEO)
+│  │  ├─ toplu/page.tsx              # Toplu üretim
+│  │  ├─ araclar/baslik-uretici/     # Ücretsiz araç (SEO)
+│  │  ├─ araclar/kar-hesaplayici/    # Kâr & fiyat hesaplayıcı
 │  │  └─ api/generate/route.ts       # AI üretim ucu
 │  ├─ components/                    # Navbar, Generator, ResultCard, Pricing, Faq
 │  └─ lib/                           # prompts, plans, types, rate-limit, supabase
@@ -126,7 +131,7 @@ satly/
 - [x] Görselden içerik (vision) + Türkçe/İngilizce çıktı
 - [ ] Supabase hesap sistemi ve bulut geçmiş
 - [ ] iyzico/PayTR abonelik ve faturalama
-- [ ] Toplu üretim (CSV/Excel yükleme)
+- [x] Toplu üretim + kâr hesaplayıcı + karakter sayacı + PWA
 - [ ] Pazaryeri resmi API entegrasyonları
 
 ## 📄 Lisans

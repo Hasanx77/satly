@@ -15,6 +15,7 @@ const display = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: "Satly — E-ticaret metnini yapay zekâya bırak",
   description:
     "Ürün adını yaz; 30 saniyede satışa hazır başlık, açıklama, özellik listesi ve SEO anahtar kelimelerini al. Trendyol, Hepsiburada, Amazon ve Shopify için Türkçe yapay zekâ.",

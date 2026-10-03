@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const LINKS = [
   { href: "/#ozellikler", label: "Özellikler" },
-  { href: "/#nasil", label: "Nasıl Çalışır" },
+  { href: "/toplu", label: "Toplu Üretim" },
   { href: "/#fiyat", label: "Fiyatlar" },
   { href: "/#sss", label: "SSS" },
 ];

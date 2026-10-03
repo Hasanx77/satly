@@ -1,21 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import type { GenerationResult } from "@/lib/types";
+import { TITLE_LIMITS } from "@/lib/prompts";
+import type { GenerationResult, Marketplace } from "@/lib/types";
 
 function CopyButton({ text, label = "Kopyala" }: { text: string; label?: string }) {
   const [copied, setCopied] = useState(false);
-
   async function copy() {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch {
-      /* clipboard izni yoksa sessiz geç */
+      /* yoksay */
     }
   }
-
   return (
     <button
       type="button"
@@ -82,9 +81,8 @@ function toCsv(result: GenerationResult): string {
     ["Anahtar Kelimeler", result.keywords.join(", ")],
     ["Sosyal Medya", result.socialCaption],
   ];
-  const header = "Alan,Değer\n";
   const body = rows.map(([k, v]) => `${csvEscape(k)},${csvEscape(v)}`).join("\n");
-  return "\uFEFF" + header + body; // BOM: Excel'de Türkçe karakterler doğru görünsün
+  return "\uFEFF" + "Alan,Değer\n" + body;
 }
 
 function Section({
@@ -110,11 +108,15 @@ function Section({
 export default function ResultCard({
   result,
   mock,
+  marketplace = "trendyol",
 }: {
   result: GenerationResult;
   mock: boolean;
+  marketplace?: Marketplace;
 }) {
   const allText = toTxt(result);
+  const limit = TITLE_LIMITS[marketplace] ?? 100;
+  const waText = `${result.titleOptions[0] ?? ""}\n\n${result.shortDescription}\n\n(Satly ile üretildi)`;
 
   return (
     <div className="space-y-3">
@@ -125,10 +127,25 @@ export default function ResultCard({
       )}
 
       <Section title="Başlık Varyantları" copyText={result.titleOptions.join("\n")}>
-        <ul className="list-disc space-y-1.5 pl-5 marker:text-brand-400">
-          {result.titleOptions.map((t, i) => (
-            <li key={i}>{t}</li>
-          ))}
+        <ul className="space-y-2">
+          {result.titleOptions.map((t, i) => {
+            const over = t.length > limit;
+            return (
+              <li key={i} className="flex items-start justify-between gap-3">
+                <span className="flex-1">{t}</span>
+                <span
+                  className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium ${
+                    over
+                      ? "bg-rose-500/15 text-rose-300"
+                      : "bg-emerald-500/10 text-emerald-300"
+                  }`}
+                  title={`Önerilen limit: ${limit} karakter`}
+                >
+                  {t.length}/{limit}
+                </span>
+              </li>
+            );
+          })}
         </ul>
       </Section>
 
@@ -140,10 +157,7 @@ export default function ResultCard({
         <p className="whitespace-pre-line">{result.longDescription}</p>
       </Section>
 
-      <Section
-        title="Özellikler"
-        copyText={result.features.map((f) => `• ${f}`).join("\n")}
-      >
+      <Section title="Özellikler" copyText={result.features.map((f) => `• ${f}`).join("\n")}>
         <ul className="list-disc space-y-1.5 pl-5 marker:text-brand-400">
           {result.features.map((f, i) => (
             <li key={i}>{f}</li>
@@ -169,19 +183,34 @@ export default function ResultCard({
       </Section>
 
       <div className="flex flex-wrap justify-end gap-2">
+        <a
+          href={`https://wa.me/?text=${encodeURIComponent(waText)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-ghost"
+        >
+          WhatsApp
+        </a>
         <button
           type="button"
           onClick={() => download("urun-icerigi.csv", toCsv(result), "text/csv;charset=utf-8")}
           className="btn-ghost"
         >
-          ⬇ CSV indir
+          ⬇ CSV
+        </button>
+        <button
+          type="button"
+          onClick={() => download("urun-icerigi.json", JSON.stringify(result, null, 2), "application/json")}
+          className="btn-ghost"
+        >
+          ⬇ JSON
         </button>
         <button
           type="button"
           onClick={() => download("urun-icerigi.txt", toTxt(result))}
           className="btn-ghost"
         >
-          ⬇ TXT indir
+          ⬇ TXT
         </button>
         <CopyButton text={allText} label="Tümünü Kopyala" />
       </div>

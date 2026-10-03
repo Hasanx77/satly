@@ -71,7 +71,7 @@ console.log("1) Saglik ve rotalar");
   check("GET /api/health -> 200", h.status === 200, "durum=" + h.status);
   check("health.ok === true", !!(h.body && h.body.ok === true));
 
-  for (const p of ["/", "/araclar/baslik-uretici", "/panel", "/robots.txt", "/sitemap.xml"]) {
+  for (const p of ["/", "/araclar/baslik-uretici", "/araclar/kar-hesaplayici", "/toplu", "/panel", "/robots.txt", "/sitemap.xml", "/manifest.webmanifest", "/icon.svg"]) {
     const r = await req(p);
     check(`GET ${p} -> 200`, r.status === 200, "durum=" + r.status);
   }
@@ -135,8 +135,25 @@ console.log("\n5) Dil ve gorsel");
   check("Gecerli gorsel -> 200", goodImg.status === 200, "durum=" + goodImg.status);
 }
 
-// --- 6) Hız sınırı (EN SON) ---
-console.log("\n6) Hiz siniri (dakikada 20)");
+// --- 6) Toplu üretim ---
+console.log("\n6) Toplu uretim");
+{
+  const bulk = await postJson("/api/generate-bulk", {
+    items: [
+      { name: "Kablosuz Kulaklik", marketplace: "trendyol" },
+      { name: "Yoga Mati", marketplace: "amazon", language: "en" },
+    ],
+  });
+  check("Toplu uretim -> 200", bulk.status === 200, "durum=" + bulk.status);
+  check("Toplu uretim 2 satir doner", !!(bulk.body && Array.isArray(bulk.body.rows) && bulk.body.rows.length === 2));
+  check("Toplu uretim satirlari gecerli", !!(bulk.body && bulk.body.rows && bulk.body.rows.every((r) => r.result && Array.isArray(r.result.titleOptions))));
+
+  const emptyBulk = await postJson("/api/generate-bulk", { items: [] });
+  check("Bos toplu istek -> 400", emptyBulk.status === 400, "durum=" + emptyBulk.status);
+}
+
+// --- 7) Hız sınırı (EN SON) ---
+console.log("\n7) Hiz siniri (dakikada 20)");
 {
   let got429 = false;
   for (let i = 0; i < 30; i++) {
