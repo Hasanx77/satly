@@ -12,8 +12,8 @@ import type {
 } from "@/lib/types";
 import ResultCard from "./ResultCard";
 
-const HISTORY_KEY = "sa_history_v1";
-const USAGE_KEY = "sa_usage_v1";
+const HISTORY_KEY = "satly_history_v1";
+const USAGE_KEY = "satly_usage_v1";
 
 export default function Generator() {
   const [name, setName] = useState("");

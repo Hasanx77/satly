@@ -67,7 +67,7 @@ function toTxt(result: GenerationResult): string {
     "=== SOSYAL MEDYA ===",
     result.socialCaption,
     "",
-    "--- SatıcıAsistan ile üretildi ---",
+    "--- Satly ile üretildi ---",
   ].join("\n");
 }
 

@@ -9,7 +9,7 @@ Kopyala-yapıştır kullanılabilir. Gönderirken ürün adını kişiselleştir
 > Merhaba arkadaşlar 👋
 >
 > Trendyol/Hepsiburada'da ürün açıklaması yazmak saatlerimi alıyordu, benim gibi olanlar
-> için küçük bir araç geliştirdim: **SatıcıAsistan**.
+> için küçük bir araç geliştirdim: **Satly**.
 >
 > Ürün adını yazıyorsun, 30 saniyede:
 > ✅ Satışa hazır başlık (3 varyant)
@@ -37,7 +37,7 @@ Kopyala-yapıştır kullanılabilir. Gönderirken ürün adını kişiselleştir
 > [Ajans]'ın birden fazla mağaza yönettiğini gördüm. Müşterileriniz için ürün başlığı ve
 > açıklamaları yazmak ekipte ciddi zaman alıyordur.
 >
-> SatıcıAsistan, ürün adından yola çıkarak Trendyol/Hepsiburada/Amazon/Shopify formatında
+> Satly, ürün adından yola çıkarak Trendyol/Hepsiburada/Amazon/Shopify formatında
 > satışa hazır içerik üretiyor — Türkçe, SEO uyumlu ve pazaryeri kurallarına uygun.
 >
 > Ajanslar için toplu planımız var (2.000 üretim/ay, 5 kullanıcı). 15 dakikalık bir

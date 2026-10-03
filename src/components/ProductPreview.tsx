@@ -38,7 +38,7 @@ export default function ProductPreview() {
             </div>
             <div className="mx-auto flex items-center gap-2 rounded-md border border-white/5 bg-black/30 px-3 py-1 text-[11px] text-slate-500">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-              satici-asistan.app
+              satly.app
             </div>
           </div>
 

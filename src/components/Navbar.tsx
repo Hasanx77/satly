@@ -23,7 +23,7 @@ function Logo() {
         </svg>
       </span>
       <span className="font-display text-lg font-bold tracking-tight text-white">
-        Satıcı<span className="text-brand-300">Asistan</span>
+        Sat<span className="text-brand-300">ly</span>
       </span>
     </Link>
   );

@@ -1,5 +1,5 @@
 // =====================================================================
-//  SatıcıAsistan - API & rota test betiği
+//  Satly - API & rota test betiği
 //  Kullanım:  Sunucu çalışırken  ->  npm run test:api
 //  Not: Hız sınırı testi en sonda çalışır (IP'yi geçici olarak kilitler).
 // =====================================================================
@@ -61,7 +61,7 @@ function validResult(r) {
 
 const MARKETS = ["trendyol", "hepsiburada", "amazon", "shopify"];
 
-console.log("=== SaticiAsistan test paketi ===");
+console.log("=== Satly test paketi ===");
 console.log("Sunucu: " + BASE + "\n");
 
 // --- 1) Sağlık ve rotalar ---

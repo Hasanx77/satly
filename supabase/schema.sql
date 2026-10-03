@@ -1,5 +1,5 @@
 -- ============================================================
---  SatıcıAsistan - Supabase / PostgreSQL şeması
+--  Satly - Supabase / PostgreSQL şeması
 --  Supabase panelindeki "SQL Editor"a yapıştırıp çalıştır.
 -- ============================================================
 

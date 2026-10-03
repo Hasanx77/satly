@@ -15,7 +15,7 @@ const display = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "SatıcıAsistan — E-ticaret metnini yapay zekâya bırak",
+  title: "Satly — E-ticaret metnini yapay zekâya bırak",
   description:
     "Ürün adını yaz; 30 saniyede satışa hazır başlık, açıklama, özellik listesi ve SEO anahtar kelimelerini al. Trendyol, Hepsiburada, Amazon ve Shopify için Türkçe yapay zekâ.",
   keywords: [
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     "amazon listing türkçe",
   ],
   openGraph: {
-    title: "SatıcıAsistan — E-ticaret metnini yapay zekâya bırak",
+    title: "Satly — E-ticaret metnini yapay zekâya bırak",
     description:
       "Ürün adını yaz, 30 saniyede satışa hazır içerik al. Trendyol, Hepsiburada, Amazon ve Shopify için.",
     locale: "tr_TR",

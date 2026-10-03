@@ -196,7 +196,7 @@ export default function Home() {
       {/* FEATURES */}
       <section id="ozellikler" className="container-x py-24">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="section-label">Neden SatıcıAsistan</p>
+          <p className="section-label">Neden Satly</p>
           <h2 className="mt-3 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl">
             İlanlarınızı <span className="text-gradient-brand">satışa</span> dönüştürün
           </h2>
@@ -368,7 +368,7 @@ export default function Home() {
                 S
               </span>
               <span className="font-display text-lg font-bold text-white">
-                Satıcı<span className="text-brand-300">Asistan</span>
+                Sat<span className="text-brand-300">ly</span>
               </span>
             </div>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-500">
@@ -425,7 +425,7 @@ export default function Home() {
 
         <div className="border-t border-white/5">
           <div className="container-x flex flex-col items-center justify-between gap-3 py-6 text-xs text-slate-600 sm:flex-row">
-            <p>© 2026 SatıcıAsistan · Tüm hakları saklıdır.</p>
+            <p>© 2026 Satly · Tüm hakları saklıdır.</p>
             <p>Beta sürüm · Üretilen içerikleri yayınlamadan önce kontrol edin.</p>
           </div>
         </div>

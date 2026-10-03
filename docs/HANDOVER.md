@@ -3,13 +3,13 @@
 > Bu dosya, otonom çalışma oturumunda yapılanların özeti ve senin yapman gerekenlerin
 > listesidir. Uyandığında **önce burayı oku**.
 
-Tarih: 2026-10-03 · Proje: `satici-asistan`
+Tarih: 2026-10-03 · Proje: `satly`
 
 ---
 
 ## 1) Kısa özet
 
-`SatıcıAsistan` için **çalışan bir MVP** kuruldu ve doğrulandı:
+`Satly` için **çalışan bir MVP** kuruldu ve doğrulandı:
 üretim derlemesi (build) hatasız, sunucu çalışıyor, API'ler yanıt veriyor.
 
 **Teknik olarak çalışıyor.** Eksik olan tek şey senin hesap/anahtar kısımların (OpenAI

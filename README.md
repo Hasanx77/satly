@@ -1,4 +1,4 @@
-# SatıcıAsistan
+# Satly
 
 E-ticaret satıcıları için **Türkçe yapay zekâ destekli ürün içeriği üreteci**. Ürün adını
 yazarsın; **başlık varyantları, kısa/uzun açıklama, özellik listesi, SEO anahtar kelimeleri
@@ -13,7 +13,7 @@ uygun çıktı verir.
 ## Hızlı Başlangıç (yerel)
 
 ```bash
-cd "satici-asistan"
+cd "satly"
 npm install
 cp .env.example .env.local   # Windows: copy .env.example .env.local
 npm run dev
@@ -48,7 +48,7 @@ Tarayıcıda `http://localhost:3000` adresini aç.
 ## Proje Yapısı
 
 ```
-satici-asistan/
+satly/
 ├─ src/
 │  ├─ app/
 │  │  ├─ page.tsx                      # Ana sayfa (hero + üretici + fiyatlar)
