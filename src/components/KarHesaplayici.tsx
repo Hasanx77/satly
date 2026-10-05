@@ -28,7 +28,7 @@ export default function KarHesaplayici() {
     const totalCost = cost + (sellerPaysShipping ? shipping : 0);
     const c = commission / 100;
     const k = kdv / 100;
-    const kdvShare = k / (1 + k); // KDV dahil fiyatın vergiye giden oranı
+    const kdvShare = k / (1 + k);
     const m = targetMargin / 100;
     const denominator = 1 - c - kdvShare - m;
 
@@ -54,7 +54,7 @@ export default function KarHesaplayici() {
 
   return (
     <div className="grid gap-8 lg:grid-cols-2">
-      {/* INPUTS */}
+      {}
       <div className="glass space-y-5 rounded-2xl p-6">
         <h3 className="font-display text-lg font-semibold text-white">Girdiler</h3>
 
@@ -100,7 +100,7 @@ export default function KarHesaplayici() {
         </label>
       </div>
 
-      {/* RESULT */}
+      {}
       <div className="space-y-4">
         {result.possible ? (
           <>

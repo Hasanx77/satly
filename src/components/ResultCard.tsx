@@ -12,7 +12,7 @@ function CopyButton({ text, label = "Kopyala" }: { text: string; label?: string 
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch {
-      /* yoksay */
+
     }
   }
   return (

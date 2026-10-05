@@ -14,7 +14,6 @@ export interface GenerateOutput {
   usage?: GenerateUsage;
 }
 
-/** Anahtar yokken uygulamanın çalışmaya devam etmesi için örnek çıktı. */
 export function mockResult(input: GenerationInput, hasImage = false): GenerationResult {
   if (input.language === "en") {
     return {
@@ -74,7 +73,6 @@ export function mockResult(input: GenerationInput, hasImage = false): Generation
   };
 }
 
-/** Tek bir ürün için içerik üretir (OpenAI varsa gerçek, yoksa demo). */
 export async function generateContent(
   input: GenerationInput,
   image?: string

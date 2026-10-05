@@ -1,14 +1,13 @@
-// Basit, bağımlılıksız anahtar kelime çıkarımı (Türkçe + İngilizce stopword).
-// Rakiplerin ilan metinlerini yapıştırıp en sık geçen kelimeleri bulmak için kullanılır.
+
 
 const STOPWORDS = new Set<string>([
-  // Türkçe
+
   "ve", "ile", "için", "bir", "bu", "da", "de", "ki", "mi", "mı", "mu", "mü",
   "en", "çok", "gibi", "olan", "olarak", "veya", "ya", "ama", "ise", "her",
   "daha", "kadar", "sonra", "önce", "şu", "o", "ben", "sen", "biz", "siz",
   "onlar", "göre", "üzere", "tüm", "bütün", "adet", "tane", "ürün", "ürünler",
   "olan", "olup", "oldukça", "hem", "ancak", "fakat", "lakin", "çünkü",
-  // İngilizce
+
   "the", "and", "for", "with", "you", "your", "a", "an", "of", "to", "in",
   "on", "is", "are", "this", "that", "it", "as", "at", "by", "or", "be",
 ]);

@@ -13,7 +13,6 @@ export const SECTORS: { id: Sector; label: string }[] = [
   { id: "oto", label: "Otomotiv & Aksesuar" },
 ];
 
-/** Sektöre özel yönergeler (Qsup/Celer'in "sektöre özel prompt" avantajına karşılık). */
 export const SECTOR_RULES: Record<Sector, string> = {
   genel: "SEKTÖR: Genel. Fayda odaklı, sade ve güven veren bir anlatım kullan.",
   giyim:
@@ -36,7 +35,6 @@ export const SECTOR_RULES: Record<Sector, string> = {
     "SEKTÖR: Otomotiv & Aksesuar. Uyumluluk (marka/model), ölçü, montaj kolaylığı ve malzeme. Uyumluluk uydurma; 'uyumluluğu kontrol edin' ifadesi kullan.",
 };
 
-/** Seçilen sektöre göre hızlı eklenebilecek özellik önerileri (UI çipleri). */
 export const FEATURE_SUGGESTIONS: Record<Sector, string[]> = {
   genel: ["Yüksek kaliteli malzeme", "Kolay kullanım", "Uzun ömürlü", "Modern tasarım"],
   giyim: ["Pamuklu kumaş", "Esnek yapı", "Nefes alabilir", "Kolay yıkanır", "Beden aralığı: S-XL"],

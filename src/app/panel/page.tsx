@@ -39,7 +39,7 @@ export default function PanelPage() {
       const u = localStorage.getItem(USAGE_KEY);
       if (u) setUsed(Number(u) || 0);
     } catch {
-      /* yoksay */
+
     }
     setReady(true);
   }, []);
@@ -87,7 +87,7 @@ export default function PanelPage() {
     try {
       await navigator.clipboard.writeText(text);
     } catch {
-      /* yoksay */
+
     }
   }
 

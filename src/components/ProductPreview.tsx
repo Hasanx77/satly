@@ -9,10 +9,10 @@ const TITLES = [
 export default function ProductPreview() {
   return (
     <div className="relative mx-auto mt-14 max-w-4xl">
-      {/* Glow under the window */}
+      {}
       <div className="pointer-events-none absolute inset-x-8 -top-6 bottom-0 -z-10 rounded-[2rem] bg-brand-600/25 blur-[80px]" />
 
-      {/* Floating badges */}
+      {}
       <div className="absolute -left-4 top-16 z-20 hidden animate-float sm:block">
         <div className="glass rounded-xl px-3 py-2 text-xs shadow-xl">
           <p className="font-semibold text-white">⚡ 30 saniye</p>
@@ -26,10 +26,10 @@ export default function ProductPreview() {
         </div>
       </div>
 
-      {/* Window */}
+      {}
       <div className="glass glow-ring overflow-hidden rounded-2xl p-1.5">
         <div className="overflow-hidden rounded-[0.9rem] border border-white/10 bg-ink-900">
-          {/* Top bar */}
+          {}
           <div className="flex items-center gap-3 border-b border-white/5 bg-white/[0.02] px-4 py-2.5">
             <div className="flex gap-1.5">
               <span className="h-2.5 w-2.5 rounded-full bg-rose-400/70" />
@@ -42,9 +42,9 @@ export default function ProductPreview() {
             </div>
           </div>
 
-          {/* Body */}
+          {}
           <div className="grid gap-4 p-4 sm:p-5 md:grid-cols-5">
-            {/* Form */}
+            {}
             <div className="md:col-span-2">
               <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
                 Ürün bilgileri
@@ -71,7 +71,7 @@ export default function ProductPreview() {
               </div>
             </div>
 
-            {/* Result */}
+            {}
             <div className="md:col-span-3">
               <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
                 Satışa hazır içerik

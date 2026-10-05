@@ -122,7 +122,7 @@ export default function BulkGenerator() {
     try {
       await navigator.clipboard.writeText(text);
     } catch {
-      /* yoksay */
+
     }
   }
 
@@ -130,7 +130,7 @@ export default function BulkGenerator() {
 
   return (
     <div className="grid gap-8 lg:grid-cols-2">
-      {/* INPUT */}
+      {}
       <div className="glass space-y-5 rounded-2xl p-6">
         <div>
           <h3 className="font-display text-lg font-semibold text-white">Ürün listesi</h3>
@@ -244,7 +244,7 @@ export default function BulkGenerator() {
         )}
       </div>
 
-      {/* RESULTS */}
+      {}
       <div className="space-y-4">
         {rows.length === 0 ? (
           <div className="glass flex min-h-[360px] flex-col items-center justify-center rounded-2xl text-center">

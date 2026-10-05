@@ -1,10 +1,9 @@
-// Basit bellek-içi hız sınırlayıcı (rate limit).
-// Tek örnek (instance) için yeterlidir. Ölçekli üretimde Upstash Redis'e taşınmalı.
+
 
 type Entry = { count: number; reset: number };
 
 const store = new Map<string, Entry>();
-const WINDOW_MS = 60_000; // 1 dakika
+const WINDOW_MS = 60_000;
 
 export interface RateLimitResult {
   allowed: boolean;
@@ -31,7 +30,6 @@ export function rateLimit(key: string, limit = 20): RateLimitResult {
   return { allowed: true, remaining: limit - entry.count, reset: entry.reset, limit };
 }
 
-// Map'in sınırsız büyümesini önlemek için ara ara temizlik.
 if (typeof setInterval !== "undefined") {
   setInterval(() => {
     const now = Date.now();

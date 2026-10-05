@@ -1,7 +1,7 @@
 export interface Plan {
   id: string;
   name: string;
-  price: number; // aylık fiyat
+  price: number;
   period: string;
   quota: string;
   highlight?: boolean;
@@ -10,11 +10,8 @@ export interface Plan {
 
 export const FREE_QUOTA = 2;
 
-// Yıllık ödemede geçerli indirim oranı. Buradan değiştir, her yere yansır.
-export const YEARLY_DISCOUNT = 0.35; // %35
+export const YEARLY_DISCOUNT = 0.35;
 
-// Aylık fiyat oranı: Başlangıç 1× · Pro 2× · Ajans 5×
-//   Başlangıç 200 ₺/ay · Pro 400 ₺/ay · Ajans 1.000 ₺/ay
 export const PLANS: Plan[] = [
   {
     id: "free",

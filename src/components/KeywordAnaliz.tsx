@@ -16,7 +16,7 @@ export default function KeywordAnaliz() {
     try {
       await navigator.clipboard.writeText(text);
     } catch {
-      /* yoksay */
+
     }
   }
 

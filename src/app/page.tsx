@@ -139,8 +139,6 @@ const TOOLS = [
   { href: "/toplu", title: "Toplu Üretim", text: "Onlarca ürünü tek seferde üret." },
 ];
 
-// NOT: Aşağıdaki yorum kartları ÖRNEKTİR (placeholder). Lansmandan önce gerçek
-// müşteri yorumlarınızla değiştirin.
 const TESTIMONIALS = [
   {
     quote:
@@ -179,7 +177,7 @@ export default function Home() {
     <div id="top" className="relative">
       <Navbar />
 
-      {/* HERO */}
+      {}
       <section className="relative overflow-hidden pb-10 pt-20 sm:pt-24">
         <Background />
         <div className="container-x">
@@ -219,7 +217,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* STATS */}
+      {}
       <section className="border-y border-white/5 bg-white/[0.015]">
         <div className="container-x grid grid-cols-2 divide-white/5 py-8 md:grid-cols-4 md:divide-x">
           {STATS.map((s) => (
@@ -233,7 +231,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FEATURES */}
+      {}
       <section id="ozellikler" className="container-x py-24">
         <div className="mx-auto max-w-2xl text-center">
           <p className="section-label">Neden Satly</p>
@@ -265,7 +263,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* HOW IT WORKS */}
+      {}
       <section id="nasil" className="relative overflow-hidden border-y border-white/5 py-24">
         <div className="pointer-events-none absolute left-1/2 top-0 h-64 w-[700px] -translate-x-1/2 rounded-full bg-brand-600/10 blur-[120px]" />
         <div className="container-x">
@@ -295,7 +293,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* LIVE DEMO */}
+      {}
       <section id="uretelim" className="container-x py-24">
         <div className="mx-auto max-w-2xl text-center">
           <p className="section-label">Canlı dene</p>
@@ -311,7 +309,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
+      {}
       <section className="border-y border-white/5 bg-white/[0.015] py-24">
         <div className="container-x">
           <div className="mx-auto max-w-2xl text-center">
@@ -348,7 +346,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PRICING */}
+      {}
       <section id="fiyat" className="container-x py-24">
         <div className="mx-auto max-w-2xl text-center">
           <p className="section-label">Fiyatlandırma</p>
@@ -364,7 +362,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* UCRETSIZ ARACLAR */}
+      {}
       <section className="border-t border-white/5 py-24">
         <div className="container-x">
           <div className="mx-auto max-w-2xl text-center">
@@ -388,7 +386,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ */}
+      {}
       <section id="sss" className="border-t border-white/5 py-24">
         <div className="container-x">
           <div className="mx-auto mb-12 max-w-2xl text-center">
@@ -401,7 +399,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FINAL CTA */}
+      {}
       <section className="container-x pb-24">
         <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-brand-600/20 to-fuchsia-600/5 px-6 py-16 text-center">
           <div className="pointer-events-none absolute left-1/2 top-0 h-64 w-[700px] -translate-x-1/2 rounded-full bg-brand-500/25 blur-[120px]" />
@@ -423,7 +421,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER */}
+      {}
       <footer className="border-t border-white/5 bg-ink-950">
         <div className="container-x grid gap-10 py-14 md:grid-cols-4">
           <div className="md:col-span-2">

@@ -74,7 +74,7 @@ export async function POST(req: Request) {
   }
 
   const { image, ...input } = parsed.data;
-  // Dil tipini garantiye al
+
   const typedInput: GenerationInput = { ...input, language: input.language as Language };
 
   try {

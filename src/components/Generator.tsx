@@ -79,7 +79,7 @@ export default function Generator() {
       const b = localStorage.getItem(BRAND_KEY);
       if (b) setBrand(JSON.parse(b) as BrandVoice);
     } catch {
-      /* yoksay */
+
     }
   }, []);
 
@@ -91,7 +91,7 @@ export default function Generator() {
     try {
       localStorage.setItem(BRAND_KEY, JSON.stringify(next));
     } catch {
-      /* yoksay */
+
     }
   }
 
@@ -220,7 +220,7 @@ export default function Generator() {
 
   return (
     <div id="uretelim" className="grid gap-8 lg:grid-cols-2">
-      {/* FORM */}
+      {}
       <form
         onSubmit={handleSubmit}
         onKeyDown={handleFormKeyDown}
@@ -360,7 +360,7 @@ export default function Generator() {
           <input ref={fileRef} type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
           {image ? (
             <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-2.5">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
+              {}
               <img src={image} alt="Ürün görseli" className="h-14 w-14 rounded-lg object-cover" />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm text-slate-200">{imageName || "görsel"}</p>
@@ -409,7 +409,7 @@ export default function Generator() {
           </div>
         </div>
 
-        {/* MARKA SESİ */}
+        {}
         <details className="rounded-xl border border-white/10 bg-white/[0.02]">
           <summary className="cursor-pointer list-none px-4 py-3 text-sm font-medium text-slate-300">
             🎙️ Marka Sesi{" "}
@@ -470,7 +470,7 @@ export default function Generator() {
         )}
       </form>
 
-      {/* SONUÇ */}
+      {}
       <div className="space-y-4">
         {result ? (
           <ResultCard result={result} mock={mock} marketplace={marketplace} />

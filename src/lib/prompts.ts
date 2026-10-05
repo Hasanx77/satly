@@ -29,7 +29,6 @@ export const LANGUAGES: { id: Language; label: string; flag: string }[] = [
   { id: "ru", label: "Русский", flag: "🇷🇺" },
 ];
 
-// Pazaryerine göre önerilen başlık karakter limiti (uyarı için).
 export const TITLE_LIMITS: Record<Marketplace, number> = {
   trendyol: 100,
   hepsiburada: 120,

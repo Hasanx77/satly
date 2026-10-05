@@ -8,10 +8,6 @@ export function isSupabaseConfigured(): boolean {
   );
 }
 
-/**
- * Tarayıcı tarafı Supabase istemcisi.
- * Ortam değişkenleri yoksa null döner; uygulama yerel modda (localStorage) çalışmaya devam eder.
- */
 export function getSupabaseBrowserClient(): SupabaseClient | null {
   if (!isSupabaseConfigured()) return null;
   if (!cached) {

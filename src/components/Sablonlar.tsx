@@ -99,7 +99,7 @@ function CopyBtn({ text }: { text: string }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 1200);
     } catch {
-      /* yoksay */
+
     }
   }
   return (
